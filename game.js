@@ -562,7 +562,7 @@ function render() {
   }
   $("myName").textContent = state.players[me].name;
   $("opponentName").textContent = state.players[opp].name;
-  $("opponentHand").textContent = state.finished ? `마지막 손패 ${state.opponentFinalHand.length}장` : `손패 ${state.opponentHandCount}장`;
+  $("opponentHand").textContent = "";
 
   $("phaseText").textContent = state.finished
     ? "종료"
