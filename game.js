@@ -1,5 +1,8 @@
 
 const socket = io();
+
+// v6.3: desktop and mobile share tap/click selection controls.
+function isMobileInteraction() { return true; }
 const COLORS = ["red", "yellow", "green", "blue", "white"];
 const COLOR_NAMES = { red: "빨강", yellow: "노랑", green: "초록", blue: "파랑", white: "흰색" };
 
@@ -45,7 +48,7 @@ let draggedCardId = null;
 let mobileSelectedCardId = null;
 let mobileSelectedDiscardColor = null;
 function isMobileMode(){
-  return window.matchMedia("(max-width: 760px)").matches
+  return isMobileInteraction()
     || window.matchMedia("(orientation: landscape) and (max-height: 520px) and (max-width: 980px)").matches;
 }
 

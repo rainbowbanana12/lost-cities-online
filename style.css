@@ -3018,3 +3018,467 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
     font-size: 11px !important;
   }
 }
+
+
+/* =========================================================
+   v6.3 FOCUS BOARD
+   Desktop returns to stacked flow, interaction buttons shared
+   across desktop/mobile, mobile opponent area compressed.
+   ========================================================= */
+
+/* Common: remove hand-count indicators, move goal icon top-right */
+.handCount,
+.hand-count,
+#handCount,
+#myHandCount,
+.remainingHandCount,
+.handRemaining,
+.hybridHandCount {
+  display: none !important;
+}
+
+.mobileGoalToggle {
+  left: auto !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.hybridSidebar {
+  left: auto !important;
+  right: 8px !important;
+  top: 48px !important;
+}
+
+/* Common expedition label/card gap reduction */
+.hybridOpponentZone .expeditionTitle,
+.hybridMyExpeditionZone .expeditionTitle {
+  padding-right: 2px !important;
+}
+
+.hybridOpponentZone .expedition,
+.hybridMyExpeditionZone .expedition {
+  column-gap: 0 !important;
+}
+
+.hybridOpponentZone .stack,
+.hybridMyExpeditionZone .stack {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* ---------- Desktop: back to stacked v6.1-style flow ---------- */
+@media (min-width: 761px) {
+  .appShell {
+    width: calc(100% - 10px) !important;
+    max-width: 1700px !important;
+    padding: 4px 0 142px !important;
+  }
+
+  .hybridGame {
+    display: block !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  .hybridBoard {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 3px !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 5px !important;
+    margin: 0 0 5px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 20px !important;
+    height: auto !important;
+    margin: 0 0 3px !important;
+    padding: 0 2px !important;
+    font-size: 11px !important;
+  }
+
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 3px !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0,1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 3px 4px !important;
+    overflow: hidden !important;
+    border-radius: 6px !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 120px minmax(0,1fr) !important;
+    height: 78px !important;
+    min-height: 78px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    gap: 2px !important;
+    padding: 0 2px 0 1px !important;
+    margin: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 12px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child,
+  .hybridMyExpeditionZone .expeditionCount {
+    font-size: 10px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 3px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionDivider {
+    margin: 0 !important;
+    font-size: 10px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 13px !important;
+  }
+
+  /* Larger cards on desktop */
+  .hybridOpponentZone .stack {
+    min-height: 64px !important;
+    height: 64px !important;
+    gap: 4px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    min-height: 70px !important;
+    height: 70px !important;
+    gap: 4px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 46px !important;
+    height: 64px !important;
+    flex: 0 0 46px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 50px !important;
+    height: 70px !important;
+    flex: 0 0 50px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card,
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 16px !important;
+  }
+
+  /* Discard strip */
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 2px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 46px !important;
+    height: 64px !important;
+  }
+
+  /* Desktop hand */
+  .hybridHandZone {
+    padding: 5px !important;
+  }
+
+  .hybridHandZone .hand {
+    display: flex !important;
+    gap: 5px !important;
+    min-height: 96px !important;
+    height: 96px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 62px !important;
+    height: 87px !important;
+    flex: 0 0 62px !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: 21px !important;
+  }
+
+  /* Old desktop draw rail is not needed; shared action dock handles draw actions */
+  .drawRail {
+    display: none !important;
+  }
+
+  /* Shared interaction dock on desktop */
+  .mobileActionDock {
+    display: block !important;
+    position: fixed !important;
+    z-index: 450 !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 10px !important;
+    transform: translateX(-50%) !important;
+    width: min(720px, calc(100vw - 20px)) !important;
+    padding: 6px !important;
+    border-radius: 10px !important;
+  }
+
+  .mobileSelectedInfo {
+    display: block !important;
+    min-height: 22px !important;
+    padding: 2px 4px !important;
+    font-size: 10px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 42px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  /* suppress drag affordance visually */
+  .hybridHandZone .card[draggable="true"] {
+    cursor: pointer !important;
+  }
+}
+
+/* ---------- Mobile portrait focus ---------- */
+@media (max-width: 760px) and (orientation: portrait) {
+  .appShell {
+    width: 100% !important;
+    padding: 2px 2px calc(88px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .mobileGoalToggle {
+    right: 4px !important;
+    top: max(4px, env(safe-area-inset-top)) !important;
+  }
+
+  .hybridSidebar {
+    right: 4px !important;
+    top: calc(max(4px, env(safe-area-inset-top)) + 34px) !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    padding: 2px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 14px !important;
+    height: 14px !important;
+    margin-bottom: 1px !important;
+    font-size: 8.5px !important;
+  }
+
+  /* Opponent expedition intentionally compressed */
+  .hybridOpponentZone .expeditionGrid {
+    gap: 1px !important;
+  }
+
+  .hybridOpponentZone .expedition {
+    grid-template-columns: 53px minmax(0,1fr) !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 2px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle {
+    padding-right: 1px !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child {
+    font-size: 7.5px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 6.5px !important;
+  }
+
+  .hybridOpponentZone .stack {
+    min-height: 31px !important;
+    height: 31px !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 23px !important;
+    height: 32px !important;
+    flex: 0 0 23px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber {
+    font-size: 9px !important;
+  }
+
+  /* Own expedition is the visual focus */
+  .hybridMyExpeditionZone .expeditionGrid {
+    gap: 2px !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 78px minmax(0,1fr) !important;
+    height: 51px !important;
+    min-height: 51px !important;
+    padding: 1px 2px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding-right: 1px !important;
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 8.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 1.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount,
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 7px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 9px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    min-height: 47px !important;
+    height: 47px !important;
+    gap: 0 !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 34px !important;
+    height: 48px !important;
+    flex: 0 0 34px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 12px !important;
+  }
+
+  /* Compact discard */
+  .hybridDiscardZone .discardGrid {
+    height: 43px !important;
+    gap: 1px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 43px !important;
+    min-height: 43px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 30px !important;
+    height: 42px !important;
+  }
+
+  /* Slightly larger hand cards, minimal container whitespace */
+  .hybridHandZone {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .hybridHandZone .hand {
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(14px, 4.8vw, 19px) !important;
+  }
+
+  .mobileActionDock {
+    left: 2px !important;
+    right: 2px !important;
+    bottom: max(2px, env(safe-area-inset-bottom)) !important;
+    padding: 3px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 20px !important;
+    font-size: 8.5px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 35px !important;
+    padding: 4px 5px !important;
+    font-size: 10.5px !important;
+  }
+}
