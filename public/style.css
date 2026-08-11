@@ -2187,3 +2187,240 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
     font-size: 10px !important;
   }
 }
+
+
+/* =========================================================
+   v6.1 UNIFIED VERTICAL EXPEDITION ROWS
+   Desktop + mobile use the same five-row expedition structure.
+   ========================================================= */
+
+.hybridOpponentZone .expeditionGrid,
+.hybridMyExpeditionZone .expeditionGrid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.hybridOpponentZone .expedition,
+.hybridMyExpeditionZone .expedition {
+  display: grid !important;
+  grid-template-columns: 150px minmax(0, 1fr) !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 84px !important;
+  padding: 7px 10px !important;
+  overflow: hidden !important;
+  border-radius: 10px !important;
+}
+
+.hybridOpponentZone .expedition {
+  min-height: 72px !important;
+}
+
+.hybridOpponentZone .expeditionTitle,
+.hybridMyExpeditionZone .expeditionTitle {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 10px 0 0 !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+}
+
+.hybridOpponentZone .expeditionTitle > span:first-child,
+.hybridMyExpeditionZone .expeditionTitle > span:first-child {
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+.hybridOpponentZone .expeditionTitle > span:last-child {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+.hybridMyExpeditionZone .expeditionMeta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  white-space: nowrap !important;
+}
+
+.hybridMyExpeditionZone .expeditionCount {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.hybridMyExpeditionZone .expeditionDivider {
+  font-size: 13px !important;
+  opacity: .6 !important;
+}
+
+.hybridMyExpeditionZone .expeditionLiveScore {
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+.hybridOpponentZone .stack,
+.hybridMyExpeditionZone .stack {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 58px !important;
+  padding: 2px !important;
+  overflow: hidden !important;
+}
+
+.hybridOpponentZone .stack .card,
+.hybridMyExpeditionZone .stack .card {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  border-radius: 7px !important;
+}
+
+.hybridOpponentZone .stack .card {
+  width: 44px !important;
+  height: 63px !important;
+}
+
+.hybridMyExpeditionZone .stack .card {
+  width: 50px !important;
+  height: 72px !important;
+}
+
+.hybridOpponentZone .stack .card + .card {
+  margin-left: -10px !important;
+}
+
+.hybridMyExpeditionZone .stack .card + .card {
+  margin-left: -8px !important;
+}
+
+.hybridOpponentZone .stack .card .cardNumber,
+.hybridMyExpeditionZone .stack .card .cardNumber {
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+.hybridOpponentZone .stack .card .cardName,
+.hybridMyExpeditionZone .stack .card .cardName {
+  display: none !important;
+}
+
+.inlineLiveTotal {
+  margin-left: 8px !important;
+}
+
+@media (min-width: 761px) {
+  html, body {
+    overflow-y: auto !important;
+  }
+
+  .hybridGame {
+    min-height: 100vh !important;
+    height: auto !important;
+  }
+
+  .hybridBoard {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    overflow: visible !important;
+  }
+
+  .hybridHandZone {
+    min-height: 170px !important;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 102px minmax(0, 1fr) !important;
+    min-height: 48px !important;
+    padding: 3px 5px !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expedition {
+    min-height: 44px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 9px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 7px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 4px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount {
+    font-size: 7.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 8px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 9px !important;
+  }
+
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    min-height: 38px !important;
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 25px !important;
+    height: 36px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 28px !important;
+    height: 40px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -6px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -5px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 10px !important;
+  }
+}

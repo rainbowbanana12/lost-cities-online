@@ -74,7 +74,17 @@ app.get("/healthz", (_req, res) => {
   res.json({ ok: true, rooms: rooms.size });
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+// Flat GitHub-friendly client layout: no public/ folder required.
+app.get("/", (_req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+app.get("/game.js", (_req, res) => {
+  res.sendFile(path.join(__dirname, "game.js"));
+});
+app.get("/style.css", (_req, res) => {
+  res.sendFile(path.join(__dirname, "style.css"));
+});
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 function makeRoomCode() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
