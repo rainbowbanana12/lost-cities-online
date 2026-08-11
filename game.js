@@ -456,7 +456,21 @@ function renderHand() {
   state.hand
     .slice()
     .sort((a, b) => COLORS.indexOf(a.color) - COLORS.indexOf(b.color) || a.value - b.value)
-    .forEach(card => hand.appendChild(cardEl(card, false, canMove)));
+    .forEach(card => {
+      // v6.4: hand interaction is selection-based on both desktop and mobile.
+      const el = cardEl(card, false, false);
+      if (canMove) {
+        el.classList.add("selectableCard");
+        el.addEventListener("click", e => {
+          if (!state || state.finished || !isMyTurn() || state.phase !== "play") return;
+          e.preventDefault();
+          e.stopPropagation();
+          mobileSelectedCardId = mobileSelectedCardId === card.id ? null : card.id;
+          renderMobileInteractionState();
+        });
+      }
+      hand.appendChild(el);
+    });
 }
 
 function renderStatus() {

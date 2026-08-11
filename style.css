@@ -3482,3 +3482,346 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
     font-size: 10.5px !important;
   }
 }
+
+
+/* =========================================================
+   v6.4 DESKTOP SIDE PANEL + SHARED SELECT ACTIONS
+   Desktop:
+     left = opponent + my expeditions
+     right = discard + goals
+     bottom = hand + current two action buttons
+   Mobile:
+     v6.3 layout retained, discard strip slightly shorter
+   ========================================================= */
+
+/* selected cards are click targets, not drag handles */
+.selectableCard {
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+/* ---------- DESKTOP ---------- */
+@media (min-width: 761px) {
+  .appShell {
+    width: calc(100% - 10px) !important;
+    max-width: 1720px !important;
+    padding: 4px 0 8px !important;
+  }
+
+  .hybridGame {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 330px !important;
+    grid-template-rows: auto auto auto !important;
+    column-gap: 7px !important;
+    row-gap: 6px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    align-items: start !important;
+  }
+
+  /* Let board children participate directly in the outer grid. */
+  .hybridBoard {
+    display: contents !important;
+  }
+
+  /* Left main exploration column */
+  .hybridOpponentZone {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .hybridMyExpeditionZone {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  /* Right side: discard above goals */
+  .hybridDiscardZone {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  .hybridSidebar {
+    display: block !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 7px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    border-radius: 9px !important;
+    box-shadow: none !important;
+  }
+
+  /* no redundant desktop star, since goals are permanently visible */
+  .mobileGoalToggle {
+    display: none !important;
+  }
+
+  /* Keep only the five goal cards in the side panel during normal play. */
+  .hybridSidebar .historySide {
+    display: none !important;
+  }
+
+  .goalSidebarHeader {
+    margin-bottom: 5px !important;
+  }
+
+  .goalList {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+  }
+
+  .goalItem {
+    min-height: 0 !important;
+    padding: 7px 8px !important;
+    margin: 0 !important;
+  }
+
+  /* Compact discard panel with 5 piles in one row */
+  .hybridDiscardZone .hybridZoneTitle {
+    min-height: 20px !important;
+    height: auto !important;
+    margin: 0 0 5px !important;
+    padding: 0 1px !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle small {
+    display: none !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0,1fr)) !important;
+    gap: 3px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 88px !important;
+    min-height: 88px !important;
+    padding: 3px 1px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 48px !important;
+    height: 67px !important;
+    margin: 0 auto !important;
+  }
+
+  .hybridDiscardZone .discardPile .count {
+    font-size: 9px !important;
+  }
+
+  /* Left exploration zones are compact and card-focused */
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    gap: 3px !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 84px minmax(0,1fr) !important;
+    height: 70px !important;
+    min-height: 70px !important;
+    padding: 2px 3px !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    height: 76px !important;
+    min-height: 76px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding: 0 1px !important;
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 48px !important;
+    height: 67px !important;
+    flex: 0 0 48px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 52px !important;
+    height: 73px !important;
+    flex: 0 0 52px !important;
+  }
+
+  /* Bottom row: hand left, exactly two current action buttons right */
+  .hybridHandZone {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  .hybridHandZone .hybridHandHeader {
+    min-height: 20px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .hybridHandZone .hybridHandHeader small {
+    display: none !important;
+  }
+
+  .hybridHandZone .hand {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 94px !important;
+    min-height: 94px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 64px !important;
+    height: 90px !important;
+    flex: 0 0 64px !important;
+  }
+
+  /* action dock occupies same bottom row, never wraps below */
+  .mobileActionDock {
+    display: flex !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 7px !important;
+    margin: 0 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    border-radius: 9px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 30px !important;
+    margin-bottom: 6px !important;
+    padding: 2px 3px !important;
+    font-size: 10px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+
+  .mobileActionButtons button {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    padding: 6px 5px !important;
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+  }
+
+  .drawRail,
+  .hybridLiveScoreZone,
+  .fallbackActions {
+    display: none !important;
+  }
+
+  /* final score uses goal sidebar area rather than a separate floating panel */
+  .endScorePanel {
+    display: none !important;
+  }
+}
+
+/* ---------- MOBILE PORTRAIT ---------- */
+@media (max-width: 760px) and (orientation: portrait) {
+  /* Preserve v6.3 arrangement. Only make discard zone shallower. */
+  .hybridDiscardZone {
+    padding: 1px 2px !important;
+    margin-bottom: 1px !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle {
+    height: 12px !important;
+    min-height: 12px !important;
+    margin: 0 !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle small {
+    display: none !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    height: 38px !important;
+    min-height: 38px !important;
+    gap: 1px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 27px !important;
+    height: 37px !important;
+  }
+
+  .hybridDiscardZone .discardPile .count {
+    font-size: 6.5px !important;
+  }
+}
