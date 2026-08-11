@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost Cities LAN</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <main class="appShell">
+    <section id="lobby" class="lobbyCard">
+      <div class="brandMark">LC</div>
+      <p class="eyebrow">LOCAL NETWORK EDITION</p>
+      <h1>Lost Cities</h1>
+      <p class="lobbyCopy">같은 Wi-Fi에 연결된 두 대의 PC에서 플레이합니다.</p>
+
+      <div class="field">
+        <label for="nameInput">플레이어 이름</label>
+        <input id="nameInput" maxlength="20" placeholder="이름 입력" />
+      </div>
+
+      <button id="createBtn" class="primaryButton wide">새 방 만들기</button>
+
+      <div class="divider"><span>또는</span></div>
+
+      <div class="joinRow">
+        <input id="roomInput" maxlength="4" placeholder="ROOM CODE" />
+        <button id="joinBtn" class="secondaryButton">참가</button>
+      </div>
+
+      <p id="lobbyMessage" class="message"></p>
+    </section>
+
+    <section id="waiting" class="waitingCard hidden">
+      <div class="waitingPulse"></div>
+      <p class="eyebrow">WAITING FOR EXPLORER</p>
+      <h2>방 코드 <span id="waitingCode"></span></h2>
+      <p>상대방이 입장하면 자동으로 게임이 시작됩니다.</p>
+    </section>
+
+
+    <section id="game" class="game hybridGame hidden">
+      <!-- IDs kept for existing v3+ JS, but visually removed -->
+      <div class="hiddenRuntimeMeta" aria-hidden="true">
+        <span id="roomCodeLabel"></span>
+        <span id="deckCount"></span>
+        <section id="statusBanner"><strong id="statusMain"></strong><span id="statusSub"></span></section>
+      </div>
+
+      <button id="mobileGoalToggle" class="mobileGoalToggle" type="button">목표카드 <span id="mobileGoalProgress">0/5</span></button>
+      <aside id="goalSidebar" class="goalSidebar hybridSidebar">
+        <div class="goalSidebarHeader">
+          <strong>목표카드</strong>
+          <span>이번 판 5장</span>
+        </div>
+        <div id="goalList" class="goalList"></div>
+
+        <div id="finalScoreSide" class="finalScoreSide hidden">
+          <div class="goalSidebarHeader">
+            <strong>최종 점수</strong>
+            <span id="finalResultText"></span>
+          </div>
+          <div id="finalScoreContent"></div>
+        </div>
+
+        <div class="historySide">
+          <div class="goalSidebarHeader"><strong>이전 승리 기록</strong></div>
+          <div id="historyList" class="historyListCompact"></div>
+        </div>
+      </aside>
+
+      <section class="board hybridBoard">
+        <section class="hybridOpponentZone">
+          <div class="hybridZoneTitle">
+            <span>상대 탐험</span>
+            <div>
+              <strong id="opponentName">상대</strong>
+              <span id="opponentHand" class="handCount"></span>
+            </div>
+          </div>
+
+          <div id="opponentFinalHandWrap" class="opponentFinalHandWrap hidden">
+            <span class="finalHandLabel">상대가 마지막에 가진 카드</span>
+            <div id="opponentFinalHandCards" class="opponentFinalHandCards"></div>
+          </div>
+
+          <div id="opponentExpeditions" class="expeditionGrid"></div>
+        </section>
+
+        <section class="hybridDiscardZone">
+          <div class="hybridZoneTitle compactTitle">
+            <span>버리는 카드</span>
+            <small>내 카드를 여기로 드래그 · 뽑을 때는 버림패 클릭</small>
+          </div>
+          <div id="discardPiles" class="discardGrid"></div>
+        </section>
+
+        <section class="hybridMyExpeditionZone">
+          <div class="hybridZoneTitle">
+            <span>내 탐험 <strong class="inlineLiveTotal">· 합계 <span id="myExpeditionTotal">0</span></strong></span>
+            <div>
+              <strong id="myName">나</strong>
+              <span id="phaseText" class="phaseText"></span>
+            </div>
+          </div>
+          <div id="myExpeditions" class="expeditionGrid"></div>
+        </section>
+
+        <section class="hybridLiveScoreZone">
+          <div class="hybridScoreHeader">
+            <span>현재 내 색깔별 점수</span>
+            <strong>합계 <span id="myLiveTotal">0</span></strong>
+          </div>
+          <div id="myLiveByColor" class="hybridLiveScores"></div>
+        </section>
+
+        <section class="hybridHandZone">
+          <div class="handHeader hybridHandHeader">
+            <span>내가 가진 카드</span>
+            <small>탐험칸 또는 버림패로 드래그</small>
+          </div>
+          <div id="hand" class="hand"></div>
+
+          <div class="fallbackActions">
+            <button id="playBtn" disabled>탐험</button>
+            <button id="discardBtn" disabled>버리기</button>
+          </div>
+        </section>
+      </section>
+
+      <aside class="drawRail">
+        <div id="drawDeck" class="drawDeck hybridDrawButton" title="덱에서 카드 뽑기">
+          <div class="hybridDrawCircle">
+            <span id="drawActionLabel" class="hybridDrawLabel">뽑기 더미</span>
+            <strong id="deckFaceCount" class="deckFaceCount">0</strong>
+          </div>
+          <span id="drawActionHint" class="drawHint">클릭해서 1장 뽑기</span>
+        </div>
+      </aside>
+
+      <!-- Old score panel kept only because v3+ JS binds restartBtn here -->
+      <aside id="scorePanel" class="endScorePanel hidden">
+        <div id="scoreContent"></div>
+        <button id="restartBtn" class="primaryButton">한 판 더</button>
+      </aside>
+
+      <div id="mobileActionDock" class="mobileActionDock hidden">
+        <div class="mobileSelectedInfo">
+          <span id="mobileSelectedText">카드를 선택하세요</span>
+          <button id="mobileCancelSelection" type="button">선택 취소</button>
+        </div>
+        <div class="mobileActionButtons">
+          <button id="mobileDiscardButton" type="button">선택 카드 버리기</button>
+          <button id="mobileDrawButton" type="button">내 탐험에 놓기</button>
+        </div>
+      </div>
+      <div id="toast" class="toast hidden"></div>
+    </section>
+
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
