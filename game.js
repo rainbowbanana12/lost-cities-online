@@ -529,70 +529,112 @@ function applyTurnBackground() {
 
 function syncFlowRows() {
   const host = $("flowRows");
-  const opp = $("opponentExpeditions");
-  const disc = $("discardPiles");
-  const mine = $("myExpeditions");
-  if (!host || !opp || !disc || !mine) return;
+  if (!host || !state) return;
 
   host.innerHTML = "";
 
-  const oppItems = Array.from(opp.children);
-  const discItems = Array.from(disc.children);
-  const myItems = Array.from(mine.children);
+  const me = state.me;
+  const opp = 1 - me;
 
-  for (let i = 0; i < COLORS.length; i++) {
+  function buildExpedition(color, expeditions, isMine) {
+    const box = document.createElement("div");
+    box.className = "expedition";
+    box.dataset.color = color;
+
+    const title = document.createElement("div");
+    title.className = "expeditionTitle";
+
+    if (isMine) {
+      const liveScore = expeditionScoreForLive(expeditions[color]);
+      const scoreClass =
+        liveScore > 0 ? "scorePositive" :
+        liveScore < 0 ? "scoreNegative" :
+        "scoreZero";
+
+      title.innerHTML = `
+        <span>${COLOR_NAMES[color]}</span>
+        <span class="expeditionMeta">
+          <span class="expeditionCount">${expeditions[color].length}장</span>
+          <span class="expeditionDivider">|</span>
+          <strong class="expeditionLiveScore ${scoreClass}">점수: ${liveScore}</strong>
+        </span>`;
+    } else {
+      title.innerHTML = `
+        <span>${COLOR_NAMES[color]}</span>
+        <span>${expeditions[color].length}장</span>`;
+    }
+
+    const stack = document.createElement("div");
+    stack.className = "stack";
+    expeditions[color].forEach(card => {
+      stack.appendChild(cardEl(card, true, false));
+    });
+
+    box.append(title, stack);
+    return box;
+  }
+
+  function buildDiscard(color) {
+    const pile = document.createElement("div");
+    pile.className = "discardPile";
+    pile.dataset.color = color;
+
+    const top = state.discards[color];
+    if (top) pile.appendChild(cardEl(top, true, false));
+
+    const count = document.createElement("span");
+    count.className = "count";
+    count.textContent = `${state.discardCounts[color]}장`;
+    pile.appendChild(count);
+
+    return pile;
+  }
+
+  for (const color of COLORS) {
     const row = document.createElement("div");
     row.className = "flowColorRow";
-    row.dataset.color = COLORS[i];
+    row.dataset.color = color;
 
     const left = document.createElement("div");
     left.className = "flowCell flowCellOpponent";
-    if (oppItems[i]) left.appendChild(oppItems[i].cloneNode(true));
+    left.appendChild(buildExpedition(color, state.expeditions[opp], false));
 
     const middle = document.createElement("div");
     middle.className = "flowCell flowCellDiscard";
-    if (discItems[i]) middle.appendChild(discItems[i].cloneNode(true));
+    const pile = buildDiscard(color);
+    middle.appendChild(pile);
 
     const right = document.createElement("div");
     right.className = "flowCell flowCellMine";
-    if (myItems[i]) right.appendChild(myItems[i].cloneNode(true));
+    right.appendChild(buildExpedition(color, state.expeditions[me], true));
 
     row.append(left, middle, right);
     host.appendChild(row);
-  }
 
-  if (!state || state.finished) return;
+    if (!state.finished && !isMobileMode()) {
+      // Desktop: any right-side expedition cell accepts the hand card;
+      // the server uses the card's own color to place it correctly.
+      wireDropTarget(right, cardId => playById(cardId, "expedition"));
 
-  if (!isMobileMode()) {
-    host.querySelectorAll(".flowCellMine").forEach(cell => {
-      wireDropTarget(cell, cardId => playById(cardId, "expedition"));
-    });
+      // Desktop: dropping anywhere in any discard cell discards the card;
+      // its color determines which discard pile receives it.
+      wireDropTarget(middle, cardId => playById(cardId, "discard"));
 
-    host.querySelectorAll(".flowCellDiscard").forEach(cell => {
-      wireDropTarget(cell, cardId => playById(cardId, "discard"));
-
-      const pile = cell.querySelector(".discardPile");
-      const color = pile?.dataset?.color;
-      if (pile && color) {
-        pile.style.cursor = state.canDrawCard ? "pointer" : "";
-        pile.addEventListener("click", () => {
-          if (state.phase === "draw") draw("discard", color);
-        });
-      }
-    });
-  } else {
-    host.querySelectorAll(".flowCellDiscard .discardPile").forEach(pile => {
-      const color = pile.dataset.color;
-      if (!color) return;
-
+      pile.style.cursor = state.canDrawCard ? "pointer" : "";
       pile.addEventListener("click", () => {
-        if (!state || state.finished || !isMyTurn() || state.phase !== "draw") return;
+        if (state.phase === "draw") draw("discard", color);
+      });
+    }
+
+    if (!state.finished && isMobileMode()) {
+      pile.addEventListener("click", () => {
+        if (!isMyTurn() || state.phase !== "draw") return;
         mobileSelectedDiscardColor =
           mobileSelectedDiscardColor === color ? null : color;
         renderMobileInteractionState();
         syncFlowRows();
       });
-    });
+    }
   }
 }
 
