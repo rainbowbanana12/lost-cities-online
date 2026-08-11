@@ -89,7 +89,9 @@
         </div>
 
         <div class="flowMatrix">
-          <section class="hybridOpponentZone flowOpponentZone">
+          <div id="flowRows" class="flowRows"></div>
+
+          <section class="hybridOpponentZone flowOpponentZone flowDataSource">
             <div id="opponentFinalHandWrap" class="opponentFinalHandWrap hidden">
               <span class="finalHandLabel">상대가 마지막에 가진 카드</span>
               <div id="opponentFinalHandCards" class="opponentFinalHandCards"></div>
@@ -97,11 +99,11 @@
             <div id="opponentExpeditions" class="expeditionGrid flowOpponentGrid"></div>
           </section>
 
-          <section class="hybridDiscardZone flowDiscardZone" aria-label="버림패 영역">
+          <section class="hybridDiscardZone flowDiscardZone flowDataSource" aria-label="버림패 영역">
             <div id="discardPiles" class="discardGrid flowDiscardGrid"></div>
           </section>
 
-          <section class="hybridMyExpeditionZone flowMyZone">
+          <section class="hybridMyExpeditionZone flowMyZone flowDataSource">
             <div id="myExpeditions" class="expeditionGrid flowMyGrid"></div>
           </section>
         </div>

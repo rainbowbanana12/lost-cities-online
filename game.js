@@ -526,6 +526,76 @@ function applyTurnBackground() {
   }
 }
 
+
+function syncFlowRows() {
+  const host = $("flowRows");
+  const opp = $("opponentExpeditions");
+  const disc = $("discardPiles");
+  const mine = $("myExpeditions");
+  if (!host || !opp || !disc || !mine) return;
+
+  host.innerHTML = "";
+
+  const oppItems = Array.from(opp.children);
+  const discItems = Array.from(disc.children);
+  const myItems = Array.from(mine.children);
+
+  for (let i = 0; i < COLORS.length; i++) {
+    const row = document.createElement("div");
+    row.className = "flowColorRow";
+    row.dataset.color = COLORS[i];
+
+    const left = document.createElement("div");
+    left.className = "flowCell flowCellOpponent";
+    if (oppItems[i]) left.appendChild(oppItems[i].cloneNode(true));
+
+    const middle = document.createElement("div");
+    middle.className = "flowCell flowCellDiscard";
+    if (discItems[i]) middle.appendChild(discItems[i].cloneNode(true));
+
+    const right = document.createElement("div");
+    right.className = "flowCell flowCellMine";
+    if (myItems[i]) right.appendChild(myItems[i].cloneNode(true));
+
+    row.append(left, middle, right);
+    host.appendChild(row);
+  }
+
+  if (!state || state.finished) return;
+
+  if (!isMobileMode()) {
+    host.querySelectorAll(".flowCellMine").forEach(cell => {
+      wireDropTarget(cell, cardId => playById(cardId, "expedition"));
+    });
+
+    host.querySelectorAll(".flowCellDiscard").forEach(cell => {
+      wireDropTarget(cell, cardId => playById(cardId, "discard"));
+
+      const pile = cell.querySelector(".discardPile");
+      const color = pile?.dataset?.color;
+      if (pile && color) {
+        pile.style.cursor = state.canDrawCard ? "pointer" : "";
+        pile.addEventListener("click", () => {
+          if (state.phase === "draw") draw("discard", color);
+        });
+      }
+    });
+  } else {
+    host.querySelectorAll(".flowCellDiscard .discardPile").forEach(pile => {
+      const color = pile.dataset.color;
+      if (!color) return;
+
+      pile.addEventListener("click", () => {
+        if (!state || state.finished || !isMyTurn() || state.phase !== "draw") return;
+        mobileSelectedDiscardColor =
+          mobileSelectedDiscardColor === color ? null : color;
+        renderMobileInteractionState();
+        syncFlowRows();
+      });
+    });
+  }
+}
+
 function render() {
   if (!state) return;
 
@@ -587,6 +657,7 @@ function render() {
   renderScores();
   setupMobileTapTargets();
   renderMobileInteractionState();
+  syncFlowRows();
   renderMobileGoalProgress();
 }
 

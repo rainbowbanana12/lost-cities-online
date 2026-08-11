@@ -5506,3 +5506,267 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
     overflow-y: auto !important;
   }
 }
+
+
+/* =========================================================
+   v6.8 STABLE COLOR FLOW ROWS
+   Five real DOM rows. Fixes collapsed v6.7 board.
+   ========================================================= */
+
+.flowDataSource {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  max-width: 1px !important;
+  max-height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.flowMatrix {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.flowRows {
+  display: grid !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  gap: 3px !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowColorRow {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowCell {
+  position: relative !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 7px !important;
+}
+
+.flowCell > .expedition,
+.flowCell > .discardPile {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+.flowCell > .expedition {
+  display: grid !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.flowCell .expeditionTitle {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.flowCell .stack {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowCell .stack .card {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  flex: 0 0 auto !important;
+}
+
+.flowCellDiscard > .discardPile {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1px !important;
+}
+
+.flowCell.dragOver {
+  outline: 3px solid rgba(255,255,255,.88) !important;
+  outline-offset: -3px !important;
+  filter: brightness(1.12) !important;
+}
+
+/* Desktop */
+@media (min-width: 761px) {
+  .flowColorRow {
+    grid-template-columns: minmax(0,1fr) 104px minmax(0,1.18fr) !important;
+  }
+
+  .flowCellOpponent > .expedition {
+    grid-template-columns: 72px minmax(0,1fr) !important;
+    padding: 3px 5px !important;
+  }
+
+  .flowCellMine > .expedition {
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    padding: 3px 5px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:first-child,
+  .flowCellMine .expeditionTitle > span:first-child {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:last-child,
+  .flowCellMine .expeditionCount,
+  .flowCellMine .expeditionDivider {
+    font-size: 9px !important;
+  }
+
+  .flowCellMine .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowCellMine .expeditionLiveScore {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowCellOpponent .stack .card {
+    width: clamp(38px,3.4vw,56px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellMine .stack .card {
+    width: clamp(44px,4vw,64px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellOpponent .stack .card + .card,
+  .flowCellMine .stack .card + .card {
+    margin-left: -4px !important;
+  }
+
+  .flowCellDiscard > .discardPile .card {
+    width: clamp(42px,3.8vw,58px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellDiscard > .discardPile .count {
+    margin-top: 1px !important;
+    font-size: 8px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width:760px) and (orientation:portrait) {
+  .flowRows {
+    gap: 2px !important;
+  }
+
+  .flowColorRow {
+    grid-template-columns: 27% 14% 59% !important;
+    gap: 2px !important;
+  }
+
+  .flowCellOpponent > .expedition {
+    grid-template-columns: 30px minmax(0,1fr) !important;
+    padding: 1px 2px !important;
+  }
+
+  .flowCellMine > .expedition {
+    grid-template-columns: 63px minmax(0,1fr) !important;
+    padding: 1px 2px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:first-child {
+    font-size: 6.8px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:last-child {
+    font-size: 5.7px !important;
+  }
+
+  .flowCellMine .expeditionTitle > span:first-child {
+    font-size: 7.2px !important;
+  }
+
+  .flowCellMine .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowCellMine .expeditionCount,
+  .flowCellMine .expeditionDivider {
+    font-size: 5.8px !important;
+  }
+
+  .flowCellMine .expeditionLiveScore {
+    font-size: 7px !important;
+  }
+
+  .flowCellOpponent .stack .card {
+    width: clamp(20px,5.8vw,25px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellMine .stack .card {
+    width: clamp(28px,8vw,34px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellOpponent .stack .card + .card {
+    margin-left: -5px !important;
+  }
+
+  .flowCellMine .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .flowCellDiscard > .discardPile .card {
+    width: clamp(24px,6.8vw,29px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellDiscard > .discardPile .count {
+    margin: 0 !important;
+    font-size: 5.5px !important;
+  }
+}
