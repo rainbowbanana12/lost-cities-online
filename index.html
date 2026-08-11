@@ -13,9 +13,9 @@
   <main class="appShell">
     <section id="lobby" class="lobbyCard">
       <div class="brandMark">LC</div>
-      <p class="eyebrow">LOCAL NETWORK EDITION</p>
+      <p class="eyebrow">ONLINE EDITION</p>
       <h1>Lost Cities</h1>
-      <p class="lobbyCopy">같은 Wi-Fi에 연결된 두 대의 PC에서 플레이합니다.</p>
+      <p class="lobbyCopy">방 코드를 공유해 두 명이 온라인으로 플레이합니다.</p>
 
       <div class="field">
         <label for="nameInput">플레이어 이름</label>
@@ -72,54 +72,43 @@
         </div>
       </aside>
 
-      <section class="board hybridBoard">
-        <section class="hybridOpponentZone">
-          <div class="hybridZoneTitle">
-            <span>상대 탐험</span>
-            <div>
-              <strong id="opponentName">상대</strong>
-              <span id="opponentHand" class="handCount"></span>
+      <section class="board hybridBoard flowBoard">
+        <div class="flowTopBar">
+          <div class="flowPlayer flowOpponentPlayer">
+            <strong>상대</strong>
+            <span id="opponentName">상대</span>
+            <span id="opponentHand" class="handCount"></span>
+          </div>
+          <div class="flowCenterLabel">버림패</div>
+          <div class="flowPlayer flowMyPlayer">
+            <strong>나</strong>
+            <span id="myName">나</span>
+            <strong class="flowTotal">합계 <span id="myExpeditionTotal">0</span></strong>
+            <span id="phaseText" class="phaseText"></span>
+          </div>
+        </div>
+
+        <div class="flowMatrix">
+          <section class="hybridOpponentZone flowOpponentZone">
+            <div id="opponentFinalHandWrap" class="opponentFinalHandWrap hidden">
+              <span class="finalHandLabel">상대가 마지막에 가진 카드</span>
+              <div id="opponentFinalHandCards" class="opponentFinalHandCards"></div>
             </div>
-          </div>
+            <div id="opponentExpeditions" class="expeditionGrid flowOpponentGrid"></div>
+          </section>
 
-          <div id="opponentFinalHandWrap" class="opponentFinalHandWrap hidden">
-            <span class="finalHandLabel">상대가 마지막에 가진 카드</span>
-            <div id="opponentFinalHandCards" class="opponentFinalHandCards"></div>
-          </div>
+          <section class="hybridDiscardZone flowDiscardZone" aria-label="버림패 영역">
+            <div id="discardPiles" class="discardGrid flowDiscardGrid"></div>
+          </section>
 
-          <div id="opponentExpeditions" class="expeditionGrid"></div>
-        </section>
+          <section class="hybridMyExpeditionZone flowMyZone">
+            <div id="myExpeditions" class="expeditionGrid flowMyGrid"></div>
+          </section>
+        </div>
 
-        <section class="hybridDiscardZone">
-          <div class="hybridZoneTitle compactTitle">
-            <span>버리는 카드</span>
-            <small>색 선택</small>
-          </div>
-          <div id="discardPiles" class="discardGrid"></div>
-        </section>
-
-        <section class="hybridMyExpeditionZone">
-          <div class="hybridZoneTitle">
-            <span>내 탐험 <strong class="inlineLiveTotal">합계 <span id="myExpeditionTotal">0</span></strong></span>
-            <div>
-              <strong id="myName">나</strong>
-              <span id="phaseText" class="phaseText"></span>
-            </div>
-          </div>
-          <div id="myExpeditions" class="expeditionGrid"></div>
-        </section>
-
-        <section class="hybridLiveScoreZone">
-          <div class="hybridScoreHeader">
-            <span>현재 내 색깔별 점수</span>
-            <strong>합계 <span id="myLiveTotal">0</span></strong>
-          </div>
-          <div id="myLiveByColor" class="hybridLiveScores"></div>
-        </section>
-
-        <section class="hybridHandZone">
+        <section class="hybridHandZone flowHandZone">
           <div class="handHeader hybridHandHeader">
-            <span>내가 가진 카드</span>
+            <span>내 카드</span>
             <small>카드 선택</small>
           </div>
           <div id="hand" class="hand"></div>
@@ -128,6 +117,14 @@
             <button id="playBtn" disabled>탐험</button>
             <button id="discardBtn" disabled>버리기</button>
           </div>
+        </section>
+
+        <section class="hybridLiveScoreZone">
+          <div class="hybridScoreHeader">
+            <span>현재 내 색깔별 점수</span>
+            <strong>합계 <span id="myLiveTotal">0</span></strong>
+          </div>
+          <div id="myLiveByColor" class="hybridLiveScores"></div>
         </section>
       </section>
 

@@ -1,8 +1,8 @@
 
 const socket = io();
 
-// v6.3: desktop and mobile share tap/click selection controls.
-function isMobileInteraction() { return true; }
+// v6.7: mobile uses tap controls; desktop uses drag-and-drop.
+function isMobileInteraction() { return window.matchMedia("(max-width: 760px)").matches; }
 const COLORS = ["red", "yellow", "green", "blue", "white"];
 const COLOR_NAMES = { red: "빨강", yellow: "노랑", green: "초록", blue: "파랑", white: "흰색" };
 
@@ -47,10 +47,7 @@ let selectedCardId = null;
 let draggedCardId = null;
 let mobileSelectedCardId = null;
 let mobileSelectedDiscardColor = null;
-function isMobileMode(){
-  return isMobileInteraction()
-    || window.matchMedia("(orientation: landscape) and (max-height: 520px) and (max-width: 980px)").matches;
-}
+function isMobileMode(){ return isMobileInteraction(); }
 
 
 function normalizeIncomingState(raw) {
@@ -437,13 +434,20 @@ function renderDiscards() {
     count.textContent = `${state.discardCounts[color]}장`;
     pile.appendChild(count);
 
-    if (!state.finished) {
-      wireDropTarget(pile, cardId => playById(cardId, "discard"));
-      if (!isMobileMode()) {
-        pile.addEventListener("click", () => draw("discard", color));
-      }
+    if (!state.finished && !isMobileMode()) {
+      pile.addEventListener("click", () => {
+        if (state.phase === "draw") draw("discard", color);
+      });
     }
+
     container.appendChild(pile);
+  }
+
+  // Desktop discard drop target: no need to aim at a matching color pile.
+  const zone = document.querySelector(".flowDiscardZone");
+  if (zone && !state.finished && !isMobileMode() && !zone.dataset.dropWired) {
+    zone.dataset.dropWired = "1";
+    wireDropTarget(zone, cardId => playById(cardId, "discard"));
   }
 }
 
@@ -452,14 +456,15 @@ function renderHand() {
   hand.innerHTML = "";
 
   const canMove = Boolean(state.canPlayCard);
+  const mobile = isMobileMode();
 
   state.hand
     .slice()
     .sort((a, b) => COLORS.indexOf(a.color) - COLORS.indexOf(b.color) || a.value - b.value)
     .forEach(card => {
-      // v6.4: hand interaction is selection-based on both desktop and mobile.
-      const el = cardEl(card, false, false);
-      if (canMove) {
+      const el = cardEl(card, false, canMove && !mobile);
+
+      if (canMove && mobile) {
         el.classList.add("selectableCard");
         el.addEventListener("click", e => {
           if (!state || state.finished || !isMyTurn() || state.phase !== "play") return;
@@ -469,6 +474,7 @@ function renderHand() {
           renderMobileInteractionState();
         });
       }
+
       hand.appendChild(el);
     });
 }
@@ -495,7 +501,7 @@ function renderStatus() {
 
   if (state.phase === "play") {
     $("statusMain").textContent = "내 턴 · 카드 놓기";
-    $("statusSub").textContent = "손패를 탐험열 또는 버림패로 드래그하세요.";
+    $("statusSub").textContent = isMobileMode() ? "카드를 선택해 행동하세요." : "카드를 내 탐험 또는 버림패 영역으로 드래그하세요.";
   } else {
     $("statusMain").textContent = "내 턴 · 카드 뽑기";
     $("statusSub").textContent = "덱 또는 버림패의 맨 위 카드를 클릭하세요.";
