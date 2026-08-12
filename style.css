@@ -5903,6 +5903,7 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
     grid-column: 2 / 4 !important;
     grid-row: 2 / 4 !important;
     display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
     grid-template-rows: 34px minmax(0, 1fr) 126px !important;
     gap: 6px !important;
     width: 100% !important;
