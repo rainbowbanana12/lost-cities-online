@@ -1,0 +1,6380 @@
+
+:root {
+  --bg: #0c1817;
+  --surface: rgba(20, 38, 35, .86);
+  --surface-2: rgba(30, 51, 46, .74);
+  --cream: #f2ead9;
+  --muted: #aebcb5;
+  --line: rgba(233, 226, 207, .14);
+  --gold: #c9a966;
+  --shadow: 0 24px 70px rgba(0,0,0,.34);
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--cream);
+  font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  background:
+    linear-gradient(rgba(3,12,11,.62), rgba(3,12,11,.82)),
+    radial-gradient(circle at 50% 0%, #24483f 0, #102523 38%, #071211 100%);
+  overflow-x: hidden;
+}
+
+button, input { font: inherit; }
+
+.hidden { display: none !important; }
+
+.ambient {
+  position: fixed;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: .12;
+  pointer-events: none;
+}
+
+.ambient-a { background: #d0a955; left: -180px; top: -130px; }
+.ambient-b { background: #4f8e80; right: -140px; bottom: -180px; }
+
+.appShell {
+  width: min(1440px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 24px 0 50px;
+}
+
+.lobbyCard, .waitingCard {
+  width: min(470px, 100%);
+  margin: 10vh auto 0;
+  padding: 36px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(29,49,45,.95), rgba(11,25,23,.96));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.brandMark {
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(201,169,102,.5);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  letter-spacing: .08em;
+}
+
+.eyebrow, .metaLabel, .playerTag, .handHeader > span, .tableLabel > span {
+  letter-spacing: .16em;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.lobbyCard h1 {
+  margin: 8px 0 4px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: clamp(42px, 8vw, 64px);
+  letter-spacing: -.04em;
+}
+
+.lobbyCopy { color: var(--muted); margin: 0 0 28px; }
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  color: var(--cream);
+  background: rgba(3, 11, 10, .5);
+  border: 1px solid rgba(238,231,211,.14);
+  border-radius: 12px;
+  padding: 13px 14px;
+  outline: none;
+}
+
+input:focus { border-color: rgba(201,169,102,.7); }
+
+.primaryButton, .secondaryButton {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 18px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.primaryButton {
+  background: var(--gold);
+  color: #13201d;
+}
+
+.secondaryButton {
+  color: var(--cream);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.wide { width: 100%; margin-top: 12px; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #7e918a;
+  font-size: 12px;
+  margin: 22px 0;
+}
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.joinRow { display: grid; grid-template-columns: 1fr 90px; gap: 8px; }
+.message { min-height: 20px; color: #e1b8a9; font-size: 13px; }
+
+.waitingCard { text-align: center; }
+.waitingCard h2 { font-size: 32px; margin: 8px 0; }
+.waitingCard p:last-child { color: var(--muted); }
+.waitingPulse {
+  width: 12px; height: 12px; border-radius: 50%; background: var(--gold);
+  margin: 0 auto 20px; box-shadow: 0 0 0 0 rgba(201,169,102,.5);
+  animation: pulse 1.8s infinite;
+}
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 16px rgba(201,169,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(201,169,102,0); }
+}
+
+.gameHeader {
+  display: grid;
+  grid-template-columns: 180px minmax(360px, 1fr) 180px;
+  gap: 12px;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+
+.roomMeta, .deckMeta, .turnBanner {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(13,29,27,.82);
+  backdrop-filter: blur(12px);
+}
+
+.roomMeta, .deckMeta {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.deckMeta { text-align: right; }
+
+.turnBanner {
+  position: sticky;
+  top: 10px;
+  z-index: 50;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.18);
+}
+
+.turnBanner strong {
+  display: block;
+  font-size: 19px;
+  letter-spacing: -.01em;
+}
+
+.turnBanner span:not(.turnDot) {
+  display: block;
+  color: var(--muted);
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.turnDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #73837b;
+  box-shadow: 0 0 0 5px rgba(115,131,123,.12);
+}
+
+.turnBanner.myTurn {
+  border-color: rgba(201,169,102,.65);
+  background: rgba(53,49,32,.94);
+}
+.turnBanner.myTurn .turnDot {
+  background: #e6c87e;
+  box-shadow: 0 0 0 5px rgba(230,200,126,.13);
+}
+.turnBanner.waitingTurn { opacity: .78; }
+.turnBanner.finished {
+  border-color: rgba(201,169,102,.65);
+  background: rgba(55,39,28,.95);
+}
+
+.board {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    linear-gradient(rgba(18,42,37,.58), rgba(11,31,28,.74)),
+    repeating-linear-gradient(90deg, transparent 0 90px, rgba(255,255,255,.012) 90px 91px);
+  box-shadow: var(--shadow);
+}
+
+.playerZone { padding: 18px; }
+.opponentZone { background: linear-gradient(rgba(4,15,14,.34), transparent); }
+.myZone { background: linear-gradient(transparent, rgba(4,15,14,.42)); }
+
+.playerLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.playerLine strong { display: block; font-size: 16px; margin-top: 2px; }
+.handCount, .phaseText { color: var(--muted); font-size: 12px; }
+
+.expeditionGrid, .discardGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.expedition {
+  position: relative;
+  min-height: 156px;
+  border: 1px dashed rgba(239,232,214,.16);
+  border-radius: 14px;
+  padding: 9px;
+  background: rgba(0,0,0,.1);
+  overflow: hidden;
+}
+
+.expedition::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .10;
+  pointer-events: none;
+}
+.expedition[data-color="red"]::before { background: #b7483f; }
+.expedition[data-color="yellow"]::before { background: #c79c37; }
+.expedition[data-color="green"]::before { background: #4d8a5e; }
+.expedition[data-color="blue"]::before { background: #3975a6; }
+.expedition[data-color="white"]::before { background: #d9d2c0; }
+
+.expeditionTitle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 7px;
+  color: #c8d1cc;
+  font-size: 11px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.stack {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 10px;
+  min-height: 96px;
+}
+.stack .card + .card { margin-left: -34px; }
+
+.tableCenter {
+  padding: 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(4,15,14,.22);
+}
+
+.tableLabel, .handHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tableLabel small, .handHeader small { color: #7f958c; font-size: 11px; }
+
+.centerPlayArea {
+  display: grid;
+  grid-template-columns: 1fr 118px;
+  gap: 16px;
+  align-items: center;
+}
+
+.discardPile {
+  min-height: 132px;
+  border-radius: 14px;
+  border: 1px dashed rgba(238,231,211,.19);
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: pointer;
+  background: rgba(0,0,0,.10);
+}
+
+.discardPile:empty::after {
+  content: "EMPTY";
+  font-size: 10px;
+  letter-spacing: .16em;
+  color: #6d8078;
+}
+
+.discardPile .count {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.35);
+  color: #aebcb5;
+  font-size: 10px;
+}
+
+.drawDeck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.deckStack {
+  position: relative;
+  width: 76px;
+  height: 110px;
+}
+
+.deckLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: 9px;
+  border: 1px solid rgba(214,192,138,.45);
+}
+.layer3 { transform: translate(7px, -5px); background: #152925; }
+.layer2 { transform: translate(3px, -2px); background: #1b312c; }
+.layer1 {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(201,169,102,.2), transparent 36%),
+    linear-gradient(145deg, #203b34, #0e1e1b);
+  color: #d5bd84;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-size: 11px;
+  letter-spacing: .14em;
+}
+
+.drawCaption {
+  font-size: 10px;
+  letter-spacing: .16em;
+  color: var(--gold);
+}
+
+.handHeader { margin-top: 18px; }
+
+.hand {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 142px;
+  padding: 14px 10px 2px;
+  overflow-x: auto;
+}
+.hand .card + .card { margin-left: -18px; }
+
+.card {
+  flex: 0 0 auto;
+  width: 82px;
+  height: 118px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.24);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px 9px;
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+  user-select: none;
+  box-shadow: 0 12px 24px rgba(0,0,0,.24);
+  position: relative;
+  transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 7px;
+  border: 1px solid rgba(255,255,255,.18);
+  pointer-events: none;
+}
+
+.card.small {
+  width: 60px;
+  height: 86px;
+  font-size: 16px;
+  padding: 6px 7px;
+}
+
+.hand .card[draggable="true"] { cursor: grab; }
+.hand .card[draggable="true"]:hover {
+  transform: translateY(-14px) rotate(-1deg);
+  z-index: 10;
+  box-shadow: 0 22px 30px rgba(0,0,0,.32);
+}
+.hand .card.dragging { opacity: .45; }
+
+.card.red { background: linear-gradient(150deg, #ca5c50, #7f2928); }
+.card.yellow { background: linear-gradient(150deg, #d9af45, #8e681d); }
+.card.green { background: linear-gradient(150deg, #6a9b67, #315c3b); }
+.card.blue { background: linear-gradient(150deg, #4b84b7, #274f77); }
+.card.white { background: linear-gradient(150deg, #ebe6d8, #bdb6a3); color: #2b302d; }
+
+.dropTarget {
+  transition: border-color .13s ease, background .13s ease, transform .13s ease;
+}
+.dropTarget.dragOver {
+  border-color: rgba(234,205,137,.9) !important;
+  background: rgba(201,169,102,.10) !important;
+  box-shadow: inset 0 0 0 2px rgba(201,169,102,.16);
+}
+
+.fallbackActions { display: none; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 300;
+  padding: 11px 16px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  color: var(--cream);
+  background: rgba(7,16,15,.96);
+  box-shadow: 0 16px 36px rgba(0,0,0,.38);
+  font-size: 13px;
+}
+
+.resultOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(4,11,10,.78);
+  backdrop-filter: blur(12px);
+}
+
+.resultCard {
+  width: min(620px, 100%);
+  max-height: 86vh;
+  overflow: auto;
+  padding: 30px;
+  border-radius: 22px;
+  border: 1px solid rgba(201,169,102,.3);
+  background: linear-gradient(145deg, #18302b, #0c1d1a);
+  box-shadow: var(--shadow);
+}
+
+.resultCard h2 {
+  font-family: Georgia, serif;
+  font-size: 38px;
+  margin: 4px 0 20px;
+}
+
+.scoreTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 18px;
+}
+.scoreTable th, .scoreTable td {
+  padding: 9px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+@media (max-width: 920px) {
+  .gameHeader { grid-template-columns: 1fr; }
+  .roomMeta, .deckMeta { display: none; }
+  .expeditionGrid, .discardGrid {
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .appShell { width: min(100% - 14px, 1440px); padding-top: 8px; }
+  .playerZone, .tableCenter { padding: 12px; }
+  .centerPlayArea { grid-template-columns: 1fr; }
+  .drawDeck { order: -1; }
+  .tableLabel small, .handHeader small { display: none; }
+  .card { width: 68px; height: 100px; }
+  .stack .card + .card { margin-left: -38px; }
+}
+
+
+/* v3+ : clear turn-state background */
+body.turn-me {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(246, 195, 62, .34) 0, rgba(142, 103, 20, .18) 34%, transparent 64%),
+    linear-gradient(rgba(46, 36, 8, .52), rgba(22, 20, 11, .82)),
+    #181308;
+}
+
+body.turn-opponent {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(53, 173, 102, .30) 0, rgba(23, 102, 59, .20) 35%, transparent 64%),
+    linear-gradient(rgba(8, 43, 25, .52), rgba(7, 24, 17, .84)),
+    #07170f;
+}
+
+body.turn-finished {
+  background:
+    linear-gradient(rgba(17, 20, 18, .78), rgba(8, 12, 10, .92)),
+    #0a0d0b;
+}
+
+/* Remaining-card number on the draw-card face */
+.layer1 { position: relative; }
+
+.deckFaceCount {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  z-index: 3;
+  min-width: 22px;
+  text-align: center;
+  font-family: Inter, Pretendard, sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #f4ead3;
+  text-shadow: 0 2px 8px rgba(0,0,0,.65);
+}
+
+/* Final score stays beside the board instead of covering it */
+.endScorePanel {
+  position: fixed;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 120;
+  width: 285px;
+  max-height: calc(100vh - 28px);
+  overflow: auto;
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(201,169,102,.38);
+  background: linear-gradient(145deg, rgba(24,48,43,.98), rgba(10,28,24,.98));
+  box-shadow: 0 22px 56px rgba(0,0,0,.42);
+}
+
+.endScorePanel h2 {
+  margin: 4px 0 14px;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.endScorePanel .scoreTable {
+  font-size: 12px;
+}
+
+.endScorePanel .scoreTable th,
+.endScorePanel .scoreTable td {
+  padding: 7px 5px;
+}
+
+.endScorePanel .primaryButton {
+  width: 100%;
+  margin-top: 8px;
+}
+
+@media (max-width: 1100px) {
+  .endScorePanel {
+    width: 245px;
+    left: 8px;
+  }
+}
+
+
+/* Safe v3+ goal expansion: does not change board/card dimensions */
+.goalSidebar {
+  position: fixed;
+  top: 18px;
+  left: max(12px, calc((100vw - 1440px) / 2 - 232px));
+  z-index: 90;
+  width: 220px;
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  padding: 11px;
+  border: 1px solid rgba(201,169,102,.28);
+  border-radius: 14px;
+  background: rgba(11,25,23,.96);
+  box-shadow: 0 18px 42px rgba(0,0,0,.30);
+}
+
+.goalSidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+.goalSidebarHeader > span {
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.goalList {
+  display: grid;
+  gap: 6px;
+}
+
+.goalItem {
+  padding: 7px 8px;
+  border-radius: 9px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.goalItemTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.goalPoint {
+  flex: 0 0 auto;
+  color: var(--gold);
+}
+.goalDesc {
+  margin-top: 3px;
+  font-size: 8px;
+  line-height: 1.35;
+  color: #aebbb5;
+}
+.goalStatus {
+  margin-top: 4px;
+  font-size: 8px;
+  color: #d9dfdb;
+}
+.goalItem.done {
+  border-color: rgba(201,169,102,.36);
+  background: rgba(201,169,102,.08);
+}
+.goalItem.compare {
+  border-color: rgba(78,139,98,.34);
+}
+
+.myLiveScoreBox,
+.finalScoreSide,
+.historySide {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.myLiveByColor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 7px;
+}
+.myLiveRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #bdc8c2;
+}
+.myLiveRow strong {
+  color: var(--cream);
+}
+
+.finalMiniTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8px;
+}
+.finalMiniTable th,
+.finalMiniTable td {
+  padding: 4px 2px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  text-align: center;
+}
+.finalMiniTable th:first-child,
+.finalMiniTable td:first-child {
+  text-align: left;
+}
+
+.historyListCompact {
+  display: grid;
+  gap: 4px;
+  font-size: 8px;
+  color: #aebbb5;
+}
+.historyCompactItem {
+  padding: 4px 5px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.035);
+}
+
+/* Hide the old end-score panel: final scores now live in the new left sidebar */
+#scorePanel {
+  display: none !important;
+}
+
+/* End-game opponent hand is inserted only when the round ends */
+.opponentFinalHandWrap {
+  margin: 6px 0 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.035);
+}
+.finalHandLabel {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.opponentFinalHandCards {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+}
+.opponentFinalHandCards .card {
+  width: 48px;
+  height: 69px;
+  font-size: 14px;
+}
+
+/* Turn indication: strong background color, without touching board geometry */
+body.turn-me {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(250,205,70,.38), transparent 47%),
+    linear-gradient(rgba(70,54,8,.34), rgba(24,20,9,.84)),
+    #1a1506 !important;
+}
+body.turn-opponent {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(55,166,96,.34), transparent 47%),
+    linear-gradient(rgba(8,69,34,.32), rgba(7,25,16,.86)),
+    #07180d !important;
+}
+body.turn-finished {
+  background: #0d100e !important;
+}
+
+@media (max-width: 1500px) {
+  .goalSidebar {
+    left: 10px;
+    width: 205px;
+    opacity: .97;
+  }
+}
+
+@media (max-width: 1180px) {
+  .goalSidebar {
+    position: static;
+    width: auto;
+    max-height: none;
+    margin-bottom: 10px;
+  }
+}
+
+
+/* =========================================================
+   HYBRID LAYOUT
+   v3 Plus card visuals preserved; only placement is overridden.
+   ========================================================= */
+
+.hiddenRuntimeMeta {
+  display: none !important;
+}
+
+.hybridGame {
+  position: relative;
+  height: calc(100vh - 18px);
+  display: grid !important;
+  grid-template-columns: 238px minmax(760px, 1fr) 116px;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* Left: only current goals + final result + history */
+.hybridSidebar {
+  position: static !important;
+  width: auto !important;
+  max-height: none !important;
+  height: 100%;
+  padding: 12px !important;
+  overflow-y: auto;
+  border-radius: 18px !important;
+  background: rgba(15, 29, 42, .96) !important;
+}
+
+.hybridSidebar .goalSidebarHeader:first-child strong {
+  font-size: 18px;
+}
+
+.hybridSidebar .goalList {
+  gap: 7px;
+}
+
+.hybridSidebar .goalItem {
+  padding: 8px 9px;
+}
+
+.hybridSidebar .goalItemTitle {
+  font-size: 11px;
+}
+
+.hybridSidebar .goalDesc,
+.hybridSidebar .goalStatus {
+  font-size: 9px;
+}
+
+/* Center follows sketch: opponent / discard / me / live score / hand */
+.hybridBoard {
+  min-width: 0;
+  height: 100%;
+  display: grid !important;
+  grid-template-rows: minmax(156px, 1fr) 122px minmax(168px, 1.08fr) 56px 142px;
+  gap: 8px;
+  padding: 8px;
+  overflow: visible !important;
+  border-radius: 18px;
+}
+
+.hybridOpponentZone,
+.hybridDiscardZone,
+.hybridMyExpeditionZone,
+.hybridLiveScoreZone,
+.hybridHandZone {
+  min-height: 0;
+  padding: 8px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(5, 16, 14, .18);
+  overflow: visible;
+}
+
+.hybridZoneTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.hybridZoneTitle > span:first-child {
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+.hybridZoneTitle > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compactTitle small {
+  color: #778c84;
+  font-size: 9px;
+}
+
+/* Do not clip expedition cards */
+.hybridBoard .expeditionGrid {
+  height: calc(100% - 29px);
+  overflow: visible !important;
+}
+
+.hybridBoard .expedition {
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow: visible !important;
+}
+
+.hybridBoard .stack {
+  overflow: visible !important;
+  min-height: 84px;
+}
+
+/* Discard row */
+.hybridDiscardZone .discardGrid {
+  height: calc(100% - 27px);
+}
+
+.hybridDiscardZone .discardPile {
+  min-height: 78px;
+}
+
+/* Player score row: visible only to this browser because values use own expeditions */
+.hybridLiveScoreZone {
+  padding: 5px 8px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: rgba(247, 239, 218, .08);
+}
+
+.hybridScoreHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.hybridScoreHeader strong {
+  color: var(--cream);
+}
+
+.hybridLiveScores {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin-top: 3px;
+}
+
+.hybridLiveScores .myLiveRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 4px 5px;
+  border-radius: 8px;
+  background: rgba(255,255,255,.045);
+  font-size: 9px;
+}
+
+.hybridLiveScores .myLiveRow strong {
+  font-size: 15px;
+}
+
+.hybridLiveScores .myLiveRow:nth-child(1) strong { color: #ef9e92; }
+.hybridLiveScores .myLiveRow:nth-child(2) strong { color: #e8cc78; }
+.hybridLiveScores .myLiveRow:nth-child(3) strong { color: #afd7b5; }
+.hybridLiveScores .myLiveRow:nth-child(4) strong { color: #a9caf0; }
+.hybridLiveScores .myLiveRow:nth-child(5) strong { color: #e7e2d6; }
+
+/* Hand area retains v3 Plus card sizing */
+.hybridHandZone {
+  overflow: visible;
+}
+
+.hybridHandHeader {
+  margin: 0 0 4px !important;
+  height: 18px;
+}
+
+.hybridHandZone .hand {
+  height: calc(100% - 20px) !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+  overflow: visible !important;
+}
+
+/* Right: sketch-style circular draw pile */
+.drawRail {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 28px;
+}
+
+.hybridDrawButton {
+  gap: 8px !important;
+}
+
+.hybridDrawCircle {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 2px;
+  border: 3px solid rgba(201,169,102,.82);
+  background:
+    radial-gradient(circle at 38% 28%, rgba(96,129,171,.32), transparent 36%),
+    linear-gradient(145deg, #243c63, #152746);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.34),
+    0 0 0 3px rgba(201,169,102,.08);
+  cursor: pointer;
+}
+
+.hybridDrawCircle:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 32px rgba(0,0,0,.38),
+    0 0 0 5px rgba(201,169,102,.10);
+}
+
+.hybridDrawLabel {
+  font-size: 9px;
+  color: #c7d6e8;
+}
+
+.hybridDrawCircle .deckFaceCount {
+  position: static !important;
+  min-width: 0 !important;
+  font-size: 34px !important;
+  line-height: 1 !important;
+  color: #fff !important;
+}
+
+.hybridDrawCircle .deckFaceCount.danger {
+  color: #ff6258 !important;
+  text-shadow: 0 0 12px rgba(255, 60, 50, .48);
+}
+
+.drawHint {
+  font-size: 8px;
+  color: var(--muted);
+}
+
+/* Game end: reveal final opponent hand without covering board */
+.opponentFinalHandWrap {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: min(640px, 72%);
+  margin: 0 !important;
+  background: rgba(11, 25, 23, .97) !important;
+  border: 1px solid rgba(201,169,102,.30);
+  box-shadow: 0 14px 34px rgba(0,0,0,.30);
+}
+
+.opponentFinalHandCards {
+  justify-content: center;
+}
+
+/* End score stays in left column. Old popup stays hidden. */
+#scorePanel {
+  display: none !important;
+}
+
+.finalScoreSide {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.finalMiniTable {
+  font-size: 8px !important;
+}
+
+/* The entire background is the turn indicator */
+body.turn-me {
+  background:
+    radial-gradient(circle at 52% 48%, rgba(255, 207, 66, .46), transparent 49%),
+    linear-gradient(rgba(92, 65, 4, .36), rgba(25, 20, 8, .86)),
+    #1d1604 !important;
+  box-shadow: inset 0 0 260px rgba(255, 193, 32, .32) !important;
+}
+
+body.turn-opponent {
+  background:
+    radial-gradient(circle at 52% 48%, rgba(49, 177, 94, .40), transparent 49%),
+    linear-gradient(rgba(4, 80, 35, .35), rgba(5, 27, 16, .88)),
+    #06190c !important;
+  box-shadow: inset 0 0 260px rgba(47, 166, 91, .28) !important;
+}
+
+body.turn-finished {
+  background: #0b100e !important;
+}
+
+/* 10 cards or fewer */
+.deckFaceCount.danger {
+  color: #ff6258 !important;
+}
+
+/* Keep desktop one-screen behavior; only fall back when truly narrow */
+@media (max-width: 1220px) {
+  body { overflow: auto !important; }
+
+  .hybridGame {
+    height: auto;
+    grid-template-columns: 220px minmax(720px, 1fr) 100px;
+    min-height: 760px;
+  }
+
+  .hybridBoard {
+    min-height: 760px;
+  }
+}
+
+
+/* v5.1 — discard pile fit */
+.hybridDiscardZone .discardPile > .card {
+  width: 50px !important;
+  height: 72px !important;
+  border-radius: 7px !important;
+}
+.hybridDiscardZone .discardPile > .card .cardNumber {
+  font-size: 14px !important;
+  left: 5px !important;
+  top: 4px !important;
+}
+.hybridDiscardZone .discardPile > .card .cardName {
+  display: none !important;
+}
+.hybridDiscardZone .discardPile > .card .cardAnimal {
+  inset: 14px 4px 4px !important;
+}
+
+/* Draw circle becomes restart button at game end */
+.hybridDrawButton.restartMode .hybridDrawCircle {
+  border-color: rgba(230, 197, 105, .95);
+  background:
+    radial-gradient(circle at 38% 28%, rgba(222,188,91,.30), transparent 38%),
+    linear-gradient(145deg, #70581d, #382a0f);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.34),
+    0 0 0 4px rgba(230,197,105,.12);
+}
+.hybridDrawButton.restartMode .deckFaceCount {
+  font-size: 30px !important;
+  color: #f5df9a !important;
+}
+.hybridDrawButton.restartMode .hybridDrawLabel,
+.hybridDrawButton.restartMode .drawHint {
+  color: #f4dda0;
+}
+
+.mobileGoalToggle,.mobileActionDock{display:none}.card.mobileSelected{outline:3px solid #ffe08a!important;outline-offset:2px;transform:translateY(-8px)!important;z-index:80!important}.mobileCompatibleTarget{border-color:rgba(255,224,138,.92)!important;background:rgba(255,224,138,.1)!important;box-shadow:inset 0 0 0 2px rgba(255,224,138,.16)}
+@media(max-width:760px){
+html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}body{padding-bottom:calc(112px + env(safe-area-inset-bottom))}.appShell{width:100%;height:auto!important;min-height:100svh;padding:0}.hybridGame{display:block!important;width:100%;height:auto!important;min-height:100svh;padding:52px 0 calc(118px + env(safe-area-inset-bottom))}
+.mobileGoalToggle{display:flex;position:fixed;z-index:190;top:calc(8px + env(safe-area-inset-top));left:10px;align-items:center;gap:7px;min-height:38px;padding:8px 12px;border:1px solid rgba(201,169,102,.4);border-radius:999px;background:rgba(9,23,20,.95);color:var(--cream);font-weight:800;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.25)}.mobileGoalToggle span{color:var(--gold);font-size:10px}.hybridSidebar{display:none;position:fixed!important;z-index:180!important;inset:calc(54px + env(safe-area-inset-top)) 10px auto 10px!important;width:auto!important;height:auto!important;max-height:70svh!important;overflow-y:auto!important;padding:12px!important;border-radius:16px!important;box-shadow:0 18px 50px rgba(0,0,0,.48)!important}.hybridSidebar.mobileOpen{display:block}.hybridSidebar .historySide{display:none}
+.hybridBoard{width:100%;height:auto!important;min-height:0!important;display:block!important;padding:7px!important;border:0;border-radius:0;box-shadow:none;background:transparent;overflow:visible!important}.hybridOpponentZone,.hybridDiscardZone,.hybridMyExpeditionZone,.hybridLiveScoreZone,.hybridHandZone{width:100%;height:auto!important;min-height:0!important;margin-bottom:8px;padding:8px!important;overflow:visible!important}.hybridZoneTitle{height:auto;min-height:24px;margin-bottom:5px}.compactTitle small,.hybridHandHeader small{display:none}
+.hybridBoard .expeditionGrid,.hybridDiscardZone .discardGrid{display:grid!important;grid-template-columns:repeat(5,112px)!important;gap:7px!important;width:max-content;min-width:100%;overflow:visible!important}.hybridOpponentZone,.hybridDiscardZone,.hybridMyExpeditionZone{overflow-x:auto!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}.hybridOpponentZone::-webkit-scrollbar,.hybridDiscardZone::-webkit-scrollbar,.hybridMyExpeditionZone::-webkit-scrollbar,.hand::-webkit-scrollbar{display:none}.hybridBoard .expedition{width:112px!important;min-width:112px!important;height:138px!important;min-height:138px!important}.hybridBoard .stack{height:111px!important;min-height:111px!important;overflow:visible!important}.hybridBoard .stack .card{width:57px!important;height:82px!important}.hybridBoard .stack .card+.card{margin-left:-35px!important}.hybridDiscardZone .discardPile{width:112px!important;min-width:112px!important;height:90px!important;min-height:90px!important}.hybridDiscardZone .discardPile>.card{width:49px!important;height:70px!important}
+.hybridLiveScoreZone{position:sticky;top:calc(50px + env(safe-area-inset-top));z-index:60;background:rgba(13,29,25,.94)!important;backdrop-filter:blur(10px)}.hybridLiveScores{grid-template-columns:repeat(5,1fr)!important;gap:3px!important}.hybridLiveScores .myLiveRow{display:grid!important;gap:0!important;min-width:0;padding:4px 2px!important;text-align:center}.hybridLiveScores .myLiveRow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px}.hybridLiveScores .myLiveRow strong{font-size:14px!important}
+.hybridHandZone .hand{display:flex!important;justify-content:flex-start!important;align-items:flex-end;width:100%;height:126px!important;padding:12px 12px 2px!important;overflow-x:auto!important;overflow-y:visible!important;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}.hybridHandZone .hand .card{width:72px!important;height:104px!important;margin-left:0!important;margin-right:7px!important;scroll-snap-align:center;touch-action:manipulation}.hybridHandZone .hand .card:hover{transform:none}.drawRail{display:none!important}
+.mobileActionDock{display:grid;position:fixed;z-index:200;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));gap:6px;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(7,18,16,.97);box-shadow:0 16px 42px rgba(0,0,0,.42);backdrop-filter:blur(13px)}.mobileSelectedInfo{display:flex;justify-content:space-between;align-items:center;min-height:23px;font-size:10px;color:#c4d0ca}#mobileCancelSelection{border:0;padding:3px 7px;border-radius:7px;background:rgba(255,255,255,.07);color:#cbd4cf;font-size:9px}.mobileActionButtons{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mobileActionButtons button{min-height:46px;border:0;border-radius:12px;font-weight:900;font-size:13px}#mobileDiscardButton{background:#343d38;color:#f0eee6}#mobileDrawButton{background:#d0b365;color:#182019}#mobileDiscardButton:disabled,#mobileDrawButton:disabled{opacity:.35}.opponentFinalHandWrap{position:static!important;width:100%!important;transform:none!important;margin-bottom:7px!important}.opponentFinalHandCards{justify-content:flex-start!important;overflow-x:auto!important}.toast{bottom:calc(118px + env(safe-area-inset-bottom))!important;max-width:calc(100vw - 24px);text-align:center}
+}
+
+
+/* =========================================================
+   v5.5 MOBILE LANDSCAPE
+   Phone landscape only. Desktop and portrait remain intact.
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 980px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden !important;
+  }
+
+  body {
+    padding: 0 !important;
+  }
+
+  .appShell {
+    width: 100%;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding:
+      max(4px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left)) !important;
+  }
+
+  .hybridGame {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 88px;
+    gap: 5px;
+    width: 100%;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .mobileGoalToggle {
+    display: flex !important;
+    position: fixed;
+    z-index: 220;
+    top: max(6px, env(safe-area-inset-top));
+    left: max(8px, env(safe-area-inset-left));
+    min-height: 32px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+  }
+
+  .hybridSidebar {
+    display: none;
+    position: fixed !important;
+    z-index: 210 !important;
+    top: calc(max(6px, env(safe-area-inset-top)) + 38px) !important;
+    left: max(8px, env(safe-area-inset-left)) !important;
+    width: 250px !important;
+    max-width: min(42vw, 290px) !important;
+    max-height: calc(100dvh - 50px) !important;
+    overflow-y: auto !important;
+    padding: 9px !important;
+    border-radius: 13px !important;
+  }
+
+  .hybridSidebar.mobileOpen {
+    display: block !important;
+  }
+
+  .hybridSidebar .historySide {
+    display: none !important;
+  }
+
+  .hybridSidebar .goalItem {
+    padding: 5px 6px !important;
+  }
+
+  .hybridSidebar .goalItemTitle {
+    font-size: 9px !important;
+  }
+
+  .hybridSidebar .goalDesc,
+  .hybridSidebar .goalStatus {
+    font-size: 7px !important;
+  }
+
+  .hybridBoard {
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-rows:
+      minmax(82px, 1fr)
+      64px
+      minmax(86px, 1fr)
+      34px
+      96px;
+    gap: 3px;
+    padding: 3px !important;
+    border-radius: 10px;
+    overflow: hidden !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridLiveScoreZone,
+  .hybridHandZone {
+    width: 100%;
+    min-width: 0;
+    min-height: 0 !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 3px 5px !important;
+    border-radius: 8px;
+    overflow: hidden !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    height: 14px !important;
+    min-height: 14px !important;
+    margin: 0 0 2px !important;
+    font-size: 8px !important;
+  }
+
+  .hybridZoneTitle > span:first-child {
+    font-size: 9px !important;
+  }
+
+  .hybridZoneTitle strong,
+  .hybridZoneTitle .handCount,
+  .phaseText {
+    font-size: 8px !important;
+  }
+
+  .compactTitle small,
+  .hybridHandHeader small {
+    display: none !important;
+  }
+
+  /* All five colors stay visible in one aligned grid */
+  .hybridBoard .expeditionGrid,
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: calc(100% - 16px);
+    overflow: visible !important;
+  }
+
+  .hybridBoard .expedition,
+  .hybridDiscardZone .discardPile {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 2px !important;
+    border-radius: 7px !important;
+    overflow: visible !important;
+  }
+
+  .hybridBoard .stack {
+    width: 100%;
+    height: calc(100% - 12px) !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Played cards compact, number stays readable */
+  .hybridBoard .stack .card {
+    width: clamp(34px, 5.1vw, 47px) !important;
+    height: clamp(49px, 7.4vw, 68px) !important;
+    border-radius: 6px !important;
+  }
+
+  .hybridBoard .stack .card + .card {
+    margin-left: clamp(-28px, -3.6vw, -20px) !important;
+  }
+
+  .hybridBoard .stack .card .cardNumber {
+    font-size: clamp(13px, 1.9vw, 17px) !important;
+  }
+
+  .hybridBoard .stack .card .cardName {
+    display: none !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: clamp(32px, 4.4vw, 42px) !important;
+    height: clamp(46px, 6.3vw, 61px) !important;
+  }
+
+  /* Score becomes one narrow row */
+  .hybridLiveScoreZone {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: 68px 1fr;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 5px !important;
+    background: rgba(13,29,25,.90) !important;
+  }
+
+  .hybridScoreHeader {
+    display: block !important;
+    min-width: 0;
+    font-size: 7px !important;
+  }
+
+  .hybridScoreHeader > span {
+    display: none;
+  }
+
+  .hybridScoreHeader strong {
+    font-size: 9px !important;
+  }
+
+  .hybridLiveScores {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 2px !important;
+    margin: 0 !important;
+  }
+
+  .hybridLiveScores .myLiveRow {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    min-width: 0;
+    padding: 1px 2px !important;
+  }
+
+  .hybridLiveScores .myLiveRow span {
+    font-size: 6px !important;
+  }
+
+  .hybridLiveScores .myLiveRow strong {
+    font-size: 11px !important;
+  }
+
+  /* Hand prioritizes readable card numbers and fits 8 cards */
+  .hybridHandZone {
+    padding: 2px 4px 1px !important;
+  }
+
+  .hybridHandZone .hand {
+    display: flex !important;
+    width: 100%;
+    height: calc(100% - 16px) !important;
+    min-height: 0 !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    gap: 3px !important;
+    padding: 0 1px !important;
+    overflow: visible !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: clamp(45px, 6.9vw, 60px) !important;
+    height: clamp(65px, 9.9vw, 87px) !important;
+    flex: 0 1 auto;
+    margin: 0 !important;
+    border-radius: 7px !important;
+    touch-action: manipulation !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(16px, 2.3vw, 20px) !important;
+  }
+
+  .hybridHandZone .hand .card .cardName {
+    font-size: 6px !important;
+  }
+
+  /* Right thumb zone for draw/restart */
+  .drawRail {
+    display: flex !important;
+    grid-column: 2;
+    grid-row: 1;
+    width: 88px;
+    height: 100%;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  .hybridDrawButton {
+    width: 80px;
+    gap: 3px !important;
+  }
+
+  .hybridDrawCircle {
+    width: 72px !important;
+    height: 72px !important;
+    border-width: 2px !important;
+  }
+
+  .hybridDrawLabel {
+    font-size: 7px !important;
+  }
+
+  .hybridDrawCircle .deckFaceCount {
+    font-size: 26px !important;
+  }
+
+  .drawHint {
+    font-size: 6px !important;
+    text-align: center;
+  }
+
+  /* Portrait bottom dock is intentionally hidden in landscape */
+  .mobileActionDock {
+    display: none !important;
+  }
+
+  .card.mobileSelected {
+    transform: translateY(-4px) !important;
+    outline-width: 2px !important;
+  }
+
+  .mobileTapTarget.mobileCompatibleTarget {
+    box-shadow: inset 0 0 0 2px rgba(255,224,138,.22) !important;
+  }
+
+  .opponentFinalHandWrap {
+    position: absolute !important;
+    z-index: 80;
+    top: 18px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(68vw, 540px) !important;
+    max-height: 76px;
+    margin: 0 !important;
+    padding: 4px !important;
+    overflow: hidden !important;
+  }
+
+  .opponentFinalHandCards {
+    justify-content: center !important;
+    overflow-x: auto !important;
+  }
+
+  .opponentFinalHandCards .card {
+    width: 40px !important;
+    height: 57px !important;
+  }
+
+  .finalHandLabel {
+    font-size: 6px !important;
+    margin-bottom: 1px !important;
+  }
+
+  /* Softer full-screen tint, stronger edge cue */
+  body.turn-me {
+    box-shadow: inset 0 0 0 4px rgba(246,198,56,.72) !important;
+  }
+
+  body.turn-opponent {
+    box-shadow: inset 0 0 0 4px rgba(64,176,100,.68) !important;
+  }
+
+  .toast {
+    bottom: max(6px, env(safe-area-inset-bottom)) !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    max-width: 58vw;
+    font-size: 9px !important;
+  }
+}
+
+
+/* =========================================================
+   v5.6 LANDSCAPE FIT FIX
+   No hard minimum row heights. Hand always receives space.
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 980px) {
+  html, body {
+    height: 100%;
+    min-height: 100%;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  .appShell {
+    height: 100dvh !important;
+    min-height: 300px !important;
+    overflow: visible !important;
+  }
+
+  .hybridGame {
+    height: 100dvh !important;
+    min-height: 300px !important;
+    overflow: visible !important;
+    grid-template-columns: minmax(0, 1fr) clamp(72px, 11vw, 92px) !important;
+  }
+
+  .hybridBoard {
+    height: calc(100dvh - 8px) !important;
+    min-height: 292px !important;
+    overflow: hidden !important;
+    grid-template-rows:
+      minmax(0, 22fr)
+      minmax(0, 16fr)
+      minmax(0, 23fr)
+      minmax(28px, 9fr)
+      minmax(76px, 30fr) !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridLiveScoreZone,
+  .hybridHandZone {
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridBoard .expeditionGrid,
+  .hybridDiscardZone .discardGrid {
+    min-height: 0 !important;
+    height: calc(100% - 15px) !important;
+  }
+
+  .hybridBoard .expedition,
+  .hybridDiscardZone .discardPile,
+  .hybridBoard .stack {
+    min-height: 0 !important;
+    height: 100% !important;
+  }
+
+  /* Played card size follows viewport height rather than fixed row assumptions */
+  .hybridBoard .stack .card {
+    height: clamp(40px, 15dvh, 64px) !important;
+    width: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    flex: 0 0 auto;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    height: clamp(38px, 13dvh, 56px) !important;
+    width: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  /* Hand is the visual priority */
+  .hybridHandZone {
+    overflow: visible !important;
+  }
+
+  .hybridHandZone .hand {
+    height: calc(100% - 15px) !important;
+    min-height: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    justify-content: flex-start !important;
+    padding: 0 3px 1px !important;
+    gap: clamp(2px, .7vw, 5px) !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hybridHandZone .hand::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hybridHandZone .hand .card {
+    height: clamp(64px, 23dvh, 88px) !important;
+    width: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(15px, 5dvh, 21px) !important;
+  }
+
+  /* If a very short landscape browser leaves less than ~300px,
+     allow the page to scroll instead of clipping the hand. */
+  @media (max-height: 320px) {
+    .appShell,
+    .hybridGame {
+      height: auto !important;
+      min-height: 330px !important;
+    }
+
+    .hybridBoard {
+      height: 324px !important;
+      min-height: 324px !important;
+    }
+
+    body {
+      overflow-y: auto !important;
+    }
+  }
+}
+
+
+/* =========================================================
+   v5.7 PORTRAIT MOBILE + INLINE SCORES
+   ========================================================= */
+
+/* All devices: color scores live inside own expedition headers */
+.hybridLiveScoreZone {
+  display: none !important;
+}
+
+.inlineLiveTotal {
+  margin-left: 5px;
+  font-size: .88em;
+  font-weight: 900;
+  color: #ead596;
+}
+
+.expeditionLiveScore {
+  font-weight: 950;
+}
+
+/* Selected discard pile on touch devices */
+.discardPile.mobileDiscardSelected {
+  outline: 3px solid #ffe08a !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(255,224,138,.12) !important;
+}
+
+/* Portrait phone is now a true one-screen-width board.
+   No horizontal scrolling for expeditions, discards, or hand. */
+@media (max-width:760px) and (orientation:portrait) {
+
+  .hybridGame {
+    padding-bottom: calc(108px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .hybridBoard {
+    padding: 5px !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    padding: 6px 4px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 20px !important;
+    margin-bottom: 3px !important;
+    font-size: 10px !important;
+  }
+
+  /* Five colors always visible */
+  .hybridBoard .expeditionGrid,
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    gap: 3px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .hybridBoard .expedition,
+  .hybridDiscardZone .discardPile {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  /* Opponent area intentionally smaller */
+  .hybridOpponentZone .expedition {
+    height: 82px !important;
+    min-height: 82px !important;
+    padding: 2px !important;
+  }
+
+  .hybridOpponentZone .stack {
+    height: 60px !important;
+    min-height: 60px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 31px !important;
+    height: 45px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -21px !important;
+  }
+
+  /* Discards stay compact */
+  .hybridDiscardZone .discardPile {
+    height: 66px !important;
+    min-height: 66px !important;
+    padding: 2px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 30px !important;
+    height: 43px !important;
+  }
+
+  .hybridDiscardZone .discardPile .count {
+    font-size: 7px !important;
+  }
+
+  /* Own expeditions get a bit more room than opponent */
+  .hybridMyExpeditionZone .expedition {
+    height: 100px !important;
+    min-height: 100px !important;
+    padding: 2px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    height: 76px !important;
+    min-height: 76px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 36px !important;
+    height: 52px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -25px !important;
+  }
+
+  .expeditionTitle {
+    gap: 1px !important;
+    padding: 0 1px !important;
+    font-size: 7px !important;
+    white-space: nowrap;
+  }
+
+  .expeditionTitle span:last-child {
+    font-size: 6.5px !important;
+  }
+
+  .expeditionLiveScore {
+    font-size: 8px !important;
+  }
+
+  .inlineLiveTotal {
+    font-size: 9px !important;
+  }
+
+  /* Eight hand cards fit inside viewport width */
+  .hybridHandZone .hand {
+    display: grid !important;
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    margin: 0 !important;
+    border-radius: 5px !important;
+  }
+
+  .hybridHandZone .hand .card {
+    font-size: clamp(12px,4.2vw,18px) !important;
+  }
+
+  .card.mobileSelected {
+    transform: translateY(-5px) !important;
+  }
+
+  /* Button dock becomes the only mobile confirmation mechanism */
+  .mobileActionDock {
+    left: 6px !important;
+    right: 6px !important;
+    bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+    padding: 6px !important;
+    gap: 4px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 19px !important;
+    font-size: 9px !important;
+  }
+
+  .mobileActionButtons {
+    gap: 5px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 42px !important;
+    font-size: 12px !important;
+  }
+
+  .toast {
+    bottom: calc(104px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Landscape optimization is intentionally retired.
+   Landscape falls back to the normal responsive layout instead of v5.5/v5.6 forced board. */
+@media (orientation: landscape) and (max-height:520px) and (max-width:980px) {
+  html, body {
+    overflow: auto !important;
+    height: auto !important;
+  }
+
+  .appShell,
+  .hybridGame,
+  .hybridBoard {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .hybridGame {
+    display: block !important;
+    padding-bottom: calc(108px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .hybridBoard {
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  .drawRail {
+    display: none !important;
+  }
+}
+\n\n/* =========================================================\n   v5.8 SCORE READABILITY + RESPONSIVE CARD STACKS\n   ========================================================= */\n.expeditionMeta{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}.expeditionCount{font-weight:700}.expeditionDivider{opacity:.55;margin:0 2px}.expeditionLiveScore{font-size:1.08em;font-weight:950;letter-spacing:-.01em}.scorePositive{color:#69a9ff!important}.scoreNegative{color:#ff6666!important}.scoreZero{color:#fff!important}.inlineLiveTotal{font-size:1em!important;font-weight:950!important}#myExpeditionTotal{font-size:1.08em;font-weight:950}\n@media (min-width:761px){.hybridHandZone{height:auto!important;min-height:168px!important;overflow:visible!important;padding-bottom:10px!important}.hybridHandZone .hand{min-height:132px!important;height:auto!important;overflow:visible!important;align-items:flex-end!important}.hybridHandZone .hand .card{flex:0 0 auto!important}.hybridMyExpeditionZone .expedition,.hybridOpponentZone .expedition{overflow:hidden!important}.hybridMyExpeditionZone .stack,.hybridOpponentZone .stack{overflow:hidden!important}}\n@media (max-width:760px) and (orientation:portrait){\n.expeditionTitle{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:1px!important;min-height:24px!important;padding:1px 2px!important;line-height:1.05!important;overflow:visible!important}.expeditionTitle>span:first-child{font-size:7px!important;opacity:.82}.expeditionMeta{gap:4px!important;width:100%}.expeditionCount{font-size:7.5px!important;font-weight:750!important}.expeditionDivider{font-size:8px!important;margin:0 1px!important}.expeditionLiveScore{font-size:9px!important;font-weight:950!important}.inlineLiveTotal,#myExpeditionTotal{font-size:10px!important;font-weight:950!important}\n.hybridOpponentZone{padding-top:4px!important;padding-bottom:4px!important}.hybridOpponentZone .expedition{height:70px!important;min-height:70px!important;overflow:hidden!important}.hybridOpponentZone .stack{position:relative!important;height:43px!important;min-height:43px!important;overflow:hidden!important}.hybridOpponentZone .stack .card{position:absolute!important;left:50%!important;transform:translateX(-50%)!important;width:28px!important;height:40px!important;margin:0!important}.hybridOpponentZone .stack .card:nth-child(1){top:0!important}.hybridOpponentZone .stack .card:nth-child(2){top:5px!important}.hybridOpponentZone .stack .card:nth-child(3){top:10px!important}.hybridOpponentZone .stack .card:nth-child(4){top:15px!important}.hybridOpponentZone .stack .card:nth-child(5){top:20px!important}.hybridOpponentZone .stack .card:nth-child(n+6){top:24px!important}\n.hybridMyExpeditionZone .expedition{height:128px!important;min-height:128px!important;overflow:hidden!important;padding:2px!important}.hybridMyExpeditionZone .stack{position:relative!important;height:98px!important;min-height:98px!important;overflow:hidden!important;width:100%!important}.hybridMyExpeditionZone .stack .card{position:absolute!important;left:50%!important;transform:translateX(-50%)!important;width:38px!important;height:54px!important;margin:0!important;border-radius:5px!important}.hybridMyExpeditionZone .stack .card:nth-child(1){top:0!important}.hybridMyExpeditionZone .stack .card:nth-child(2){top:7px!important}.hybridMyExpeditionZone .stack .card:nth-child(3){top:14px!important}.hybridMyExpeditionZone .stack .card:nth-child(4){top:21px!important}.hybridMyExpeditionZone .stack .card:nth-child(5){top:28px!important}.hybridMyExpeditionZone .stack .card:nth-child(6){top:35px!important}.hybridMyExpeditionZone .stack .card:nth-child(7){top:42px!important}.hybridMyExpeditionZone .stack .card:nth-child(8){top:49px!important}.hybridMyExpeditionZone .stack .card:nth-child(9){top:56px!important}.hybridMyExpeditionZone .stack .card:nth-child(n+10){top:63px!important}.hybridMyExpeditionZone .stack .card .cardNumber{font-size:13px!important;line-height:1!important}.hybridMyExpeditionZone .expeditionGrid,.hybridOpponentZone .expeditionGrid{overflow:hidden!important}\n.hybridHandZone{min-height:0!important;height:auto!important;padding:4px 4px 5px!important;overflow:visible!important;margin-bottom:4px!important}.hybridHandHeader{min-height:16px!important;height:16px!important;margin-bottom:3px!important}.hybridHandZone .hand{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:2px!important;width:100%!important;height:auto!important;min-height:0!important;padding:0!important;overflow:visible!important;align-items:start!important}.hybridHandZone .hand .card{width:100%!important;height:auto!important;aspect-ratio:5/7!important;min-width:0!important;min-height:0!important;margin:0!important;border-radius:5px!important}.hybridHandZone .hand .card .cardNumber{font-size:clamp(12px,4vw,17px)!important}.hybridHandZone .hand .card .cardName{display:none!important}.hybridDiscardZone{padding-top:4px!important;padding-bottom:4px!important}.hybridDiscardZone .discardPile{height:60px!important;min-height:60px!important;overflow:hidden!important}.hybridDiscardZone .discardPile>.card{width:28px!important;height:40px!important}.mobileActionDock{padding:5px!important}.mobileActionButtons button{min-height:40px!important}\n}\n
+
+/* =========================================================
+   v5.9 PORTRAIT ROW BOARD
+   Portrait phones: each expedition color becomes one full-width row.
+   Desktop remains unchanged.
+   ========================================================= */
+@media (max-width: 760px) and (orientation: portrait) {
+
+  /* Main mobile rhythm */
+  .hybridBoard {
+    display: block !important;
+    padding: 4px !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 5px !important;
+    margin: 0 0 7px !important;
+    border-radius: 8px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 20px !important;
+    height: auto !important;
+    margin: 0 0 4px !important;
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+  }
+
+  /* EXPEDITIONS: 5 full-width horizontal rows */
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 3px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 46px !important;
+    padding: 3px 5px !important;
+    overflow: hidden !important;
+    border-radius: 6px !important;
+  }
+
+  /* Own expedition gets a little more room for score text */
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 120px minmax(0, 1fr) !important;
+    min-height: 52px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 4px 0 0 !important;
+    margin: 0 !important;
+    line-height: 1.05 !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 9px !important;
+    font-weight: 900 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 8px !important;
+    font-weight: 800 !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: auto !important;
+    white-space: nowrap !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount {
+    font-size: 8px !important;
+    font-weight: 800 !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 9px !important;
+    opacity: .6 !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 10px !important;
+    font-weight: 950 !important;
+  }
+
+  /* Cards are laid horizontally inside the row.
+     No absolute positioning, no vertical pile, no cross-lane spill. */
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 38px !important;
+    padding: 1px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridOpponentZone .stack .card,
+  .hybridMyExpeditionZone .stack .card {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    width: 26px !important;
+    height: 37px !important;
+    border-radius: 4px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 29px !important;
+    height: 41px !important;
+  }
+
+  /* When many cards exist, use slight overlap but keep numbers exposed */
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -7px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -6px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 10px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardName,
+  .hybridMyExpeditionZone .stack .card .cardName {
+    display: none !important;
+  }
+
+  /* DISCARD: five compact piles in one row, matching the sketch */
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    padding: 2px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 26px !important;
+    height: 37px !important;
+    margin: 0 auto !important;
+  }
+
+  /* HAND: one row, no horizontal swipe */
+  .hybridHandZone {
+    padding-bottom: 4px !important;
+  }
+
+  .hybridHandZone .hand {
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    margin: 0 !important;
+    border-radius: 5px !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(12px, 4.2vw, 17px) !important;
+  }
+
+  .hybridHandZone .hand .card .cardName {
+    display: none !important;
+  }
+
+  /* Keep action dock compact, sketch-like two buttons */
+  .mobileActionDock {
+    left: 6px !important;
+    right: 6px !important;
+    padding: 5px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 40px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  /* Goal chip stays top-left and compact */
+  .mobileGoalToggle {
+    min-height: 30px !important;
+    padding: 5px 8px !important;
+    font-size: 10px !important;
+  }
+}
+
+
+/* =========================================================
+   v6.1 UNIFIED VERTICAL EXPEDITION ROWS
+   Desktop + mobile use the same five-row expedition structure.
+   ========================================================= */
+
+.hybridOpponentZone .expeditionGrid,
+.hybridMyExpeditionZone .expeditionGrid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.hybridOpponentZone .expedition,
+.hybridMyExpeditionZone .expedition {
+  display: grid !important;
+  grid-template-columns: 150px minmax(0, 1fr) !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 84px !important;
+  padding: 7px 10px !important;
+  overflow: hidden !important;
+  border-radius: 10px !important;
+}
+
+.hybridOpponentZone .expedition {
+  min-height: 72px !important;
+}
+
+.hybridOpponentZone .expeditionTitle,
+.hybridMyExpeditionZone .expeditionTitle {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 10px 0 0 !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+}
+
+.hybridOpponentZone .expeditionTitle > span:first-child,
+.hybridMyExpeditionZone .expeditionTitle > span:first-child {
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+.hybridOpponentZone .expeditionTitle > span:last-child {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+.hybridMyExpeditionZone .expeditionMeta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  white-space: nowrap !important;
+}
+
+.hybridMyExpeditionZone .expeditionCount {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.hybridMyExpeditionZone .expeditionDivider {
+  font-size: 13px !important;
+  opacity: .6 !important;
+}
+
+.hybridMyExpeditionZone .expeditionLiveScore {
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+.hybridOpponentZone .stack,
+.hybridMyExpeditionZone .stack {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 58px !important;
+  padding: 2px !important;
+  overflow: hidden !important;
+}
+
+.hybridOpponentZone .stack .card,
+.hybridMyExpeditionZone .stack .card {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  border-radius: 7px !important;
+}
+
+.hybridOpponentZone .stack .card {
+  width: 44px !important;
+  height: 63px !important;
+}
+
+.hybridMyExpeditionZone .stack .card {
+  width: 50px !important;
+  height: 72px !important;
+}
+
+.hybridOpponentZone .stack .card + .card {
+  margin-left: -10px !important;
+}
+
+.hybridMyExpeditionZone .stack .card + .card {
+  margin-left: -8px !important;
+}
+
+.hybridOpponentZone .stack .card .cardNumber,
+.hybridMyExpeditionZone .stack .card .cardNumber {
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+.hybridOpponentZone .stack .card .cardName,
+.hybridMyExpeditionZone .stack .card .cardName {
+  display: none !important;
+}
+
+.inlineLiveTotal {
+  margin-left: 8px !important;
+}
+
+@media (min-width: 761px) {
+  html, body {
+    overflow-y: auto !important;
+  }
+
+  .hybridGame {
+    min-height: 100vh !important;
+    height: auto !important;
+  }
+
+  .hybridBoard {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    overflow: visible !important;
+  }
+
+  .hybridHandZone {
+    min-height: 170px !important;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 102px minmax(0, 1fr) !important;
+    min-height: 48px !important;
+    padding: 3px 5px !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expedition {
+    min-height: 44px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 9px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 7px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 4px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount {
+    font-size: 7.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 8px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 9px !important;
+  }
+
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    min-height: 38px !important;
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 25px !important;
+    height: 36px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 28px !important;
+    height: 40px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -6px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -5px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 10px !important;
+  }
+}
+
+
+/* =========================================================
+   v6.2 COMPACT BOARD REBALANCE
+   - Desktop: opponent | mine, discard below, hand | draw pile
+   - Desktop goal cards: hoverable star popover
+   - Mobile: less whitespace, larger readable cards
+   ========================================================= */
+
+/* ---------- Global whitespace reduction ---------- */
+.appShell {
+  width: min(1680px, calc(100% - 12px)) !important;
+  margin: 0 auto !important;
+  padding: 6px 0 12px !important;
+}
+
+.hybridGame {
+  position: relative !important;
+}
+
+/* ---------- Desktop / large tablet ---------- */
+@media (min-width: 761px) {
+
+  body {
+    overflow-y: auto !important;
+  }
+
+  .appShell {
+    width: calc(100% - 12px) !important;
+    max-width: 1780px !important;
+  }
+
+  /* Remove permanent left goal column. Board uses almost the full viewport. */
+  .hybridGame {
+    display: block !important;
+    width: 100% !important;
+    min-height: calc(100vh - 12px) !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  /* Star button at the very top */
+  .mobileGoalToggle {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 500 !important;
+    top: 8px !important;
+    left: 10px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(238,213,150,.45) !important;
+    background: rgba(13,28,26,.94) !important;
+    box-shadow: 0 7px 22px rgba(0,0,0,.25) !important;
+    cursor: pointer !important;
+  }
+
+  .mobileGoalToggle .goalStar {
+    font-size: 21px !important;
+    line-height: 1 !important;
+    color: #ead596 !important;
+  }
+
+  .mobileGoalToggle #mobileGoalProgress {
+    display: none !important;
+  }
+
+  /* Goal panel is now a hover popover rather than permanent sidebar */
+  .hybridSidebar {
+    display: none !important;
+    position: fixed !important;
+    z-index: 490 !important;
+    top: 48px !important;
+    left: 10px !important;
+    width: min(330px, calc(100vw - 20px)) !important;
+    height: auto !important;
+    max-height: calc(100vh - 58px) !important;
+    padding: 10px !important;
+    overflow-y: auto !important;
+    border-radius: 12px !important;
+    box-shadow: 0 18px 48px rgba(0,0,0,.38) !important;
+  }
+
+  .mobileGoalToggle:hover + .hybridSidebar,
+  .mobileGoalToggle:focus + .hybridSidebar,
+  .hybridSidebar:hover,
+  .hybridSidebar.mobileOpen {
+    display: block !important;
+  }
+
+  /* Two expedition columns with minimal outer margins */
+  .hybridBoard {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto !important;
+    column-gap: 8px !important;
+    row-gap: 7px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 4px !important;
+    overflow: visible !important;
+    border-radius: 10px !important;
+  }
+
+  .hybridOpponentZone {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .hybridMyExpeditionZone {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+
+  .hybridDiscardZone {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+  }
+
+  .hybridHandZone {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone,
+  .hybridDiscardZone,
+  .hybridHandZone {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 7px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 10px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 23px !important;
+    margin: 0 0 4px !important;
+    padding: 0 2px !important;
+    font-size: 12px !important;
+  }
+
+  /* Five compact horizontal expedition rows per side */
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 100px minmax(0, 1fr) !important;
+    align-items: center !important;
+    min-height: 66px !important;
+    height: 66px !important;
+    padding: 3px 5px !important;
+    border-radius: 7px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 128px minmax(0, 1fr) !important;
+  }
+
+  /* Pull label/count/score much closer to cards */
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding: 0 5px 0 1px !important;
+    margin: 0 !important;
+    gap: 2px !important;
+    justify-content: center !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 12px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 10px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 4px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount {
+    font-size: 10px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 10px !important;
+    margin: 0 !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 12px !important;
+  }
+
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    min-height: 58px !important;
+    height: 58px !important;
+    padding: 1px !important;
+    gap: 4px !important;
+    overflow: hidden !important;
+  }
+
+  /* Bigger played cards */
+  .hybridOpponentZone .stack .card,
+  .hybridMyExpeditionZone .stack .card {
+    width: 39px !important;
+    height: 55px !important;
+    flex: 0 0 39px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 42px !important;
+    height: 59px !important;
+    flex-basis: 42px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card,
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -4px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 14px !important;
+  }
+
+  /* Discard row becomes shallow and wide */
+  .hybridDiscardZone {
+    padding: 6px 8px !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    min-height: 0 !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    min-height: 68px !important;
+    height: 68px !important;
+    padding: 3px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 40px !important;
+    height: 56px !important;
+  }
+
+  /* Desktop hand is intentionally larger than mobile hand. */
+  .hybridHandZone {
+    min-height: 128px !important;
+    height: 128px !important;
+    padding: 6px 8px !important;
+  }
+
+  .hybridHandZone .hand {
+    display: flex !important;
+    align-items: flex-end !important;
+    gap: 7px !important;
+    min-height: 92px !important;
+    height: 92px !important;
+    padding: 0 2px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 58px !important;
+    height: 82px !important;
+    flex: 0 0 58px !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: 20px !important;
+  }
+
+  /* Draw pile occupies the empty lower-right board quadrant */
+  .drawRail {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 40 !important;
+    right: 4px !important;
+    bottom: 4px !important;
+    width: calc(50% - 8px) !important;
+    height: 128px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    border-radius: 10px !important;
+  }
+
+  .hybridDrawCircle {
+    width: 84px !important;
+    height: 84px !important;
+  }
+
+  .hybridDrawLabel {
+    font-size: 11px !important;
+  }
+
+  .deckFaceCount {
+    font-size: 27px !important;
+  }
+}
+
+/* ---------- Portrait mobile ---------- */
+@media (max-width: 760px) and (orientation: portrait) {
+
+  html, body {
+    width: 100% !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .appShell {
+    width: 100% !important;
+    padding: 2px 3px calc(91px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .hybridGame {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .hybridBoard {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 2px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone,
+  .hybridDiscardZone,
+  .hybridHandZone {
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 3px !important;
+    margin: 0 0 3px !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 16px !important;
+    height: 16px !important;
+    margin: 0 0 2px !important;
+    padding: 0 2px !important;
+    font-size: 9px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridZoneTitle small,
+  .hybridHandHeader small {
+    display: none !important;
+  }
+
+  /* Smaller star, less top obstruction */
+  .mobileGoalToggle {
+    position: fixed !important;
+    z-index: 500 !important;
+    top: max(4px, env(safe-area-inset-top)) !important;
+    left: 5px !important;
+    width: 31px !important;
+    height: 31px !important;
+    min-height: 31px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+
+  .mobileGoalToggle .goalStar {
+    font-size: 17px !important;
+  }
+
+  .mobileGoalToggle #mobileGoalProgress {
+    display: none !important;
+  }
+
+  .hybridSidebar {
+    top: calc(max(4px, env(safe-area-inset-top)) + 35px) !important;
+    left: 5px !important;
+    width: min(280px, calc(100vw - 10px)) !important;
+    max-width: none !important;
+  }
+
+  /* Expedition row is tight: short label column, cards immediately after it */
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 66px minmax(0, 1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 1px 3px !important;
+    gap: 0 !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 91px minmax(0, 1fr) !important;
+    height: 49px !important;
+    min-height: 49px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding: 0 3px 0 1px !important;
+    margin: 0 !important;
+    gap: 1px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 7.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 2px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount,
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 7px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 8.5px !important;
+  }
+
+  /* Cards are larger than v6.1 despite shorter whitespace */
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    display: flex !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    gap: 1px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    min-height: 45px !important;
+    height: 45px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 29px !important;
+    height: 41px !important;
+    flex: 0 0 29px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 32px !important;
+    height: 45px !important;
+    flex: 0 0 32px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card,
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -4px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 11px !important;
+  }
+
+  /* Compact discard strip */
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0,1fr)) !important;
+    gap: 2px !important;
+    height: 47px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    min-height: 47px !important;
+    height: 47px !important;
+    padding: 1px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 30px !important;
+    height: 42px !important;
+  }
+
+  .hybridDiscardZone .discardPile .count {
+    font-size: 7px !important;
+  }
+
+  /* Mobile hand gets its own compact sizing, no inherited desktop empty height */
+  .hybridHandZone {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 3px !important;
+  }
+
+  .hybridHandZone .hand {
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    aspect-ratio: 5 / 7 !important;
+    margin: 0 !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(13px, 4.5vw, 18px) !important;
+  }
+
+  /* Mobile draw rail stays hidden; action dock is the draw control */
+  .drawRail {
+    display: none !important;
+  }
+
+  .mobileActionDock {
+    left: 3px !important;
+    right: 3px !important;
+    bottom: max(3px, env(safe-area-inset-bottom)) !important;
+    padding: 4px !important;
+    border-radius: 8px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 22px !important;
+    padding: 1px 2px !important;
+    font-size: 9px !important;
+  }
+
+  .mobileActionButtons {
+    gap: 3px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 36px !important;
+    padding: 5px 6px !important;
+    font-size: 11px !important;
+  }
+}
+
+
+/* =========================================================
+   v6.3 FOCUS BOARD
+   Desktop returns to stacked flow, interaction buttons shared
+   across desktop/mobile, mobile opponent area compressed.
+   ========================================================= */
+
+/* Common: remove hand-count indicators, move goal icon top-right */
+.handCount,
+.hand-count,
+#handCount,
+#myHandCount,
+.remainingHandCount,
+.handRemaining,
+.hybridHandCount {
+  display: none !important;
+}
+
+.mobileGoalToggle {
+  left: auto !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.hybridSidebar {
+  left: auto !important;
+  right: 8px !important;
+  top: 48px !important;
+}
+
+/* Common expedition label/card gap reduction */
+.hybridOpponentZone .expeditionTitle,
+.hybridMyExpeditionZone .expeditionTitle {
+  padding-right: 2px !important;
+}
+
+.hybridOpponentZone .expedition,
+.hybridMyExpeditionZone .expedition {
+  column-gap: 0 !important;
+}
+
+.hybridOpponentZone .stack,
+.hybridMyExpeditionZone .stack {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* ---------- Desktop: back to stacked v6.1-style flow ---------- */
+@media (min-width: 761px) {
+  .appShell {
+    width: calc(100% - 10px) !important;
+    max-width: 1700px !important;
+    padding: 4px 0 142px !important;
+  }
+
+  .hybridGame {
+    display: block !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  .hybridBoard {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 3px !important;
+    overflow: visible !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 5px !important;
+    margin: 0 0 5px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 20px !important;
+    height: auto !important;
+    margin: 0 0 3px !important;
+    padding: 0 2px !important;
+    font-size: 11px !important;
+  }
+
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 3px !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0,1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 3px 4px !important;
+    overflow: hidden !important;
+    border-radius: 6px !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 120px minmax(0,1fr) !important;
+    height: 78px !important;
+    min-height: 78px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    gap: 2px !important;
+    padding: 0 2px 0 1px !important;
+    margin: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 12px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child,
+  .hybridMyExpeditionZone .expeditionCount {
+    font-size: 10px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 3px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionDivider {
+    margin: 0 !important;
+    font-size: 10px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 13px !important;
+  }
+
+  /* Larger cards on desktop */
+  .hybridOpponentZone .stack {
+    min-height: 64px !important;
+    height: 64px !important;
+    gap: 4px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    min-height: 70px !important;
+    height: 70px !important;
+    gap: 4px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 46px !important;
+    height: 64px !important;
+    flex: 0 0 46px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 50px !important;
+    height: 70px !important;
+    flex: 0 0 50px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card,
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber,
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 16px !important;
+  }
+
+  /* Discard strip */
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 2px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 46px !important;
+    height: 64px !important;
+  }
+
+  /* Desktop hand */
+  .hybridHandZone {
+    padding: 5px !important;
+  }
+
+  .hybridHandZone .hand {
+    display: flex !important;
+    gap: 5px !important;
+    min-height: 96px !important;
+    height: 96px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 62px !important;
+    height: 87px !important;
+    flex: 0 0 62px !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: 21px !important;
+  }
+
+  /* Old desktop draw rail is not needed; shared action dock handles draw actions */
+  .drawRail {
+    display: none !important;
+  }
+
+  /* Shared interaction dock on desktop */
+  .mobileActionDock {
+    display: block !important;
+    position: fixed !important;
+    z-index: 450 !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 10px !important;
+    transform: translateX(-50%) !important;
+    width: min(720px, calc(100vw - 20px)) !important;
+    padding: 6px !important;
+    border-radius: 10px !important;
+  }
+
+  .mobileSelectedInfo {
+    display: block !important;
+    min-height: 22px !important;
+    padding: 2px 4px !important;
+    font-size: 10px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 42px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  /* suppress drag affordance visually */
+  .hybridHandZone .card[draggable="true"] {
+    cursor: pointer !important;
+  }
+}
+
+/* ---------- Mobile portrait focus ---------- */
+@media (max-width: 760px) and (orientation: portrait) {
+  .appShell {
+    width: 100% !important;
+    padding: 2px 2px calc(88px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .mobileGoalToggle {
+    right: 4px !important;
+    top: max(4px, env(safe-area-inset-top)) !important;
+  }
+
+  .hybridSidebar {
+    right: 4px !important;
+    top: calc(max(4px, env(safe-area-inset-top)) + 34px) !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridHandZone {
+    padding: 2px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hybridZoneTitle,
+  .hybridHandHeader {
+    min-height: 14px !important;
+    height: 14px !important;
+    margin-bottom: 1px !important;
+    font-size: 8.5px !important;
+  }
+
+  /* Opponent expedition intentionally compressed */
+  .hybridOpponentZone .expeditionGrid {
+    gap: 1px !important;
+  }
+
+  .hybridOpponentZone .expedition {
+    grid-template-columns: 53px minmax(0,1fr) !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 2px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle {
+    padding-right: 1px !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child {
+    font-size: 7.5px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 6.5px !important;
+  }
+
+  .hybridOpponentZone .stack {
+    min-height: 31px !important;
+    height: 31px !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 23px !important;
+    height: 32px !important;
+    flex: 0 0 23px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .hybridOpponentZone .stack .card .cardNumber {
+    font-size: 9px !important;
+  }
+
+  /* Own expedition is the visual focus */
+  .hybridMyExpeditionZone .expeditionGrid {
+    gap: 2px !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 78px minmax(0,1fr) !important;
+    height: 51px !important;
+    min-height: 51px !important;
+    padding: 1px 2px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding-right: 1px !important;
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 8.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 1.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount,
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 7px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 9px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    min-height: 47px !important;
+    height: 47px !important;
+    gap: 0 !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 34px !important;
+    height: 48px !important;
+    flex: 0 0 34px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card .cardNumber {
+    font-size: 12px !important;
+  }
+
+  /* Compact discard */
+  .hybridDiscardZone .discardGrid {
+    height: 43px !important;
+    gap: 1px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 43px !important;
+    min-height: 43px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 30px !important;
+    height: 42px !important;
+  }
+
+  /* Slightly larger hand cards, minimal container whitespace */
+  .hybridHandZone {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .hybridHandZone .hand {
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(14px, 4.8vw, 19px) !important;
+  }
+
+  .mobileActionDock {
+    left: 2px !important;
+    right: 2px !important;
+    bottom: max(2px, env(safe-area-inset-bottom)) !important;
+    padding: 3px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 20px !important;
+    font-size: 8.5px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 35px !important;
+    padding: 4px 5px !important;
+    font-size: 10.5px !important;
+  }
+}
+
+
+/* =========================================================
+   v6.4 DESKTOP SIDE PANEL + SHARED SELECT ACTIONS
+   Desktop:
+     left = opponent + my expeditions
+     right = discard + goals
+     bottom = hand + current two action buttons
+   Mobile:
+     v6.3 layout retained, discard strip slightly shorter
+   ========================================================= */
+
+/* selected cards are click targets, not drag handles */
+.selectableCard {
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+/* ---------- DESKTOP ---------- */
+@media (min-width: 761px) {
+  .appShell {
+    width: calc(100% - 10px) !important;
+    max-width: 1720px !important;
+    padding: 4px 0 8px !important;
+  }
+
+  .hybridGame {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 330px !important;
+    grid-template-rows: auto auto auto !important;
+    column-gap: 7px !important;
+    row-gap: 6px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    align-items: start !important;
+  }
+
+  /* Let board children participate directly in the outer grid. */
+  .hybridBoard {
+    display: contents !important;
+  }
+
+  /* Left main exploration column */
+  .hybridOpponentZone {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .hybridMyExpeditionZone {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  /* Right side: discard above goals */
+  .hybridDiscardZone {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  .hybridSidebar {
+    display: block !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 7px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    border-radius: 9px !important;
+    box-shadow: none !important;
+  }
+
+  /* no redundant desktop star, since goals are permanently visible */
+  .mobileGoalToggle {
+    display: none !important;
+  }
+
+  /* Keep only the five goal cards in the side panel during normal play. */
+  .hybridSidebar .historySide {
+    display: none !important;
+  }
+
+  .goalSidebarHeader {
+    margin-bottom: 5px !important;
+  }
+
+  .goalList {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+  }
+
+  .goalItem {
+    min-height: 0 !important;
+    padding: 7px 8px !important;
+    margin: 0 !important;
+  }
+
+  /* Compact discard panel with 5 piles in one row */
+  .hybridDiscardZone .hybridZoneTitle {
+    min-height: 20px !important;
+    height: auto !important;
+    margin: 0 0 5px !important;
+    padding: 0 1px !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle small {
+    display: none !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0,1fr)) !important;
+    gap: 3px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 88px !important;
+    min-height: 88px !important;
+    padding: 3px 1px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 48px !important;
+    height: 67px !important;
+    margin: 0 auto !important;
+  }
+
+  .hybridDiscardZone .discardPile .count {
+    font-size: 9px !important;
+  }
+
+  /* Left exploration zones are compact and card-focused */
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    gap: 3px !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 84px minmax(0,1fr) !important;
+    height: 70px !important;
+    min-height: 70px !important;
+    padding: 2px 3px !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    height: 76px !important;
+    min-height: 76px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding: 0 1px !important;
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone .stack,
+  .hybridMyExpeditionZone .stack {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 48px !important;
+    height: 67px !important;
+    flex: 0 0 48px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 52px !important;
+    height: 73px !important;
+    flex: 0 0 52px !important;
+  }
+
+  /* Bottom row: hand left, exactly two current action buttons right */
+  .hybridHandZone {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 9px !important;
+  }
+
+  .hybridHandZone .hybridHandHeader {
+    min-height: 20px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .hybridHandZone .hybridHandHeader small {
+    display: none !important;
+  }
+
+  .hybridHandZone .hand {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 94px !important;
+    min-height: 94px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 64px !important;
+    height: 90px !important;
+    flex: 0 0 64px !important;
+  }
+
+  /* action dock occupies same bottom row, never wraps below */
+  .mobileActionDock {
+    display: flex !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 7px !important;
+    margin: 0 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    border-radius: 9px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 30px !important;
+    margin-bottom: 6px !important;
+    padding: 2px 3px !important;
+    font-size: 10px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+
+  .mobileActionButtons button {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    padding: 6px 5px !important;
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+  }
+
+  .drawRail,
+  .hybridLiveScoreZone,
+  .fallbackActions {
+    display: none !important;
+  }
+
+  /* final score uses goal sidebar area rather than a separate floating panel */
+  .endScorePanel {
+    display: none !important;
+  }
+}
+
+/* ---------- MOBILE PORTRAIT ---------- */
+@media (max-width: 760px) and (orientation: portrait) {
+  /* Preserve v6.3 arrangement. Only make discard zone shallower. */
+  .hybridDiscardZone {
+    padding: 1px 2px !important;
+    margin-bottom: 1px !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle {
+    height: 12px !important;
+    min-height: 12px !important;
+    margin: 0 !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle small {
+    display: none !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    height: 38px !important;
+    min-height: 38px !important;
+    gap: 1px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 27px !important;
+    height: 37px !important;
+  }
+
+  .hybridDiscardZone .discardPile .count {
+    font-size: 6.5px !important;
+  }
+}
+
+
+/* =========================================================
+   v6.5 SIDE-LABEL COMPACT BOARD
+   Shared concept:
+   [section identity / nickname / total] | [5 expedition rows]
+   Mobile order: opponent -> mine -> discard -> hand -> phase actions
+   Desktop: exploration left, goals then discard right, hand + actions bottom
+   ========================================================= */
+
+/* Shared removals */
+.handCount,
+.phaseText,
+.hybridZoneTitle small,
+.hybridHandHeader small {
+  display: none !important;
+}
+
+/* Section titles become left-side information columns */
+.hybridOpponentZone,
+.hybridMyExpeditionZone,
+.hybridDiscardZone,
+.hybridHandZone {
+  box-sizing: border-box !important;
+}
+
+.hybridOpponentZone .hybridZoneTitle,
+.hybridMyExpeditionZone .hybridZoneTitle,
+.hybridDiscardZone .hybridZoneTitle,
+.hybridHandZone .hybridHandHeader {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.hybridOpponentZone .hybridZoneTitle,
+.hybridMyExpeditionZone .hybridZoneTitle {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 3px !important;
+  line-height: 1.05 !important;
+}
+
+.hybridOpponentZone .hybridZoneTitle > span,
+.hybridMyExpeditionZone .hybridZoneTitle > span {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  font-weight: 900 !important;
+}
+
+.hybridOpponentZone .hybridZoneTitle > div,
+.hybridMyExpeditionZone .hybridZoneTitle > div {
+  display: block !important;
+}
+
+.hybridOpponentZone #opponentName,
+.hybridMyExpeditionZone #myName {
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-weight: 700 !important;
+  opacity: .82 !important;
+}
+
+.inlineLiveTotal {
+  display: block !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  font-weight: 800 !important;
+}
+
+/* Make title/meta and cards almost touch */
+.hybridOpponentZone .expeditionTitle,
+.hybridMyExpeditionZone .expeditionTitle {
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+.hybridOpponentZone .stack,
+.hybridMyExpeditionZone .stack {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* ---------- DESKTOP ---------- */
+@media (min-width: 761px) {
+  html, body {
+    overflow-y: auto !important;
+  }
+
+  .appShell {
+    width: calc(100% - 8px) !important;
+    max-width: 1760px !important;
+    margin: 0 auto !important;
+    padding: 4px 0 6px !important;
+  }
+
+  .hybridGame {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 330px !important;
+    grid-template-rows: auto auto auto !important;
+    column-gap: 6px !important;
+    row-gap: 5px !important;
+    align-items: start !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .hybridBoard {
+    display: contents !important;
+  }
+
+  /* Left exploration: opponent then mine */
+  .hybridOpponentZone {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .hybridMyExpeditionZone {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone {
+    display: grid !important;
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    column-gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 4px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridMyExpeditionZone {
+    grid-template-columns: 128px minmax(0,1fr) !important;
+  }
+
+  .hybridOpponentZone .hybridZoneTitle,
+  .hybridMyExpeditionZone .hybridZoneTitle {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    padding: 7px 3px 0 3px !important;
+  }
+
+  .hybridOpponentZone .hybridZoneTitle > span,
+  .hybridMyExpeditionZone .hybridZoneTitle > span {
+    font-size: 13px !important;
+  }
+
+  .hybridOpponentZone #opponentName,
+  .hybridMyExpeditionZone #myName,
+  .inlineLiveTotal {
+    font-size: 10px !important;
+  }
+
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+  }
+
+  .hybridOpponentZone .expedition,
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 88px minmax(0,1fr) !important;
+    align-items: center !important;
+    height: 62px !important;
+    min-height: 62px !important;
+    padding: 1px 2px !important;
+    column-gap: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    height: 68px !important;
+    min-height: 68px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle,
+  .hybridMyExpeditionZone .expeditionTitle {
+    gap: 1px !important;
+    padding: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child,
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 11px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child,
+  .hybridMyExpeditionZone .expeditionCount,
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 9px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 2px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 12px !important;
+  }
+
+  .hybridOpponentZone .stack {
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    height: 64px !important;
+    min-height: 64px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 44px !important;
+    height: 61px !important;
+    flex: 0 0 44px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 48px !important;
+    height: 67px !important;
+    flex: 0 0 48px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card,
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  /* Right side: goals first, discard immediately below */
+  .hybridSidebar {
+    display: block !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 1 / span 1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .mobileGoalToggle {
+    display: none !important;
+  }
+
+  .hybridSidebar .historySide {
+    display: none !important;
+  }
+
+  .goalSidebarHeader {
+    margin: 0 0 4px !important;
+    padding: 0 !important;
+  }
+
+  .goalList {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 3px !important;
+  }
+
+  .goalItem {
+    min-height: 0 !important;
+    padding: 5px 6px !important;
+  }
+
+  .hybridDiscardZone {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: 68px minmax(0,1fr) !important;
+    column-gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 5px !important;
+    margin: -1px 0 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    align-self: start !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle {
+    grid-column: 1 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 5px 1px 0 1px !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    grid-column: 2 !important;
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    height: 66px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 66px !important;
+    min-height: 66px !important;
+    padding: 1px !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 40px !important;
+    height: 56px !important;
+  }
+
+  /* Bottom: label left, 8 cards center, current 2 actions right */
+  .hybridHandZone {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    display: grid !important;
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    column-gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 112px !important;
+    min-height: 112px !important;
+    padding: 4px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hybridHandHeader {
+    grid-column: 1 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 8px 2px 0 3px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+  }
+
+  .hybridHandZone .hand {
+    grid-column: 2 !important;
+    display: grid !important;
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 4px !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 102px !important;
+    min-height: 102px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: min(68px, 100%) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    justify-self: start !important;
+  }
+
+  .mobileActionDock {
+    display: flex !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 112px !important;
+    min-height: 112px !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 24px !important;
+    margin: 0 0 4px !important;
+    padding: 1px 2px !important;
+    font-size: 9px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 48px !important;
+    padding: 5px 4px !important;
+    font-size: 10.5px !important;
+    line-height: 1.1 !important;
+  }
+
+  .drawRail,
+  .fallbackActions,
+  .hybridLiveScoreZone {
+    display: none !important;
+  }
+}
+
+/* ---------- MOBILE PORTRAIT ---------- */
+@media (max-width: 760px) and (orientation: portrait) {
+  .appShell {
+    width: 100% !important;
+    padding: 1px 2px calc(84px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .hybridGame {
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .hybridBoard {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  /* Required mobile order */
+  .hybridOpponentZone { order: 1 !important; }
+  .hybridMyExpeditionZone { order: 2 !important; }
+  .hybridDiscardZone { order: 3 !important; }
+  .hybridHandZone { order: 4 !important; }
+
+  /* Keep goal cards as the existing popup */
+  .mobileGoalToggle {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 500 !important;
+    top: max(4px, env(safe-area-inset-top)) !important;
+    right: 4px !important;
+    left: auto !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    border-radius: 50% !important;
+  }
+
+  .hybridSidebar {
+    position: fixed !important;
+    z-index: 490 !important;
+    right: 4px !important;
+    left: auto !important;
+    top: calc(max(4px, env(safe-area-inset-top)) + 34px) !important;
+    width: min(280px,calc(100vw - 8px)) !important;
+    max-height: calc(100vh - 44px) !important;
+  }
+
+  /* Shared left information column layout */
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone {
+    display: grid !important;
+    grid-template-columns: 58px minmax(0,1fr) !important;
+    column-gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 2px !important;
+    margin: 0 0 2px !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridMyExpeditionZone {
+    grid-template-columns: 67px minmax(0,1fr) !important;
+  }
+
+  .hybridOpponentZone .hybridZoneTitle,
+  .hybridMyExpeditionZone .hybridZoneTitle {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    padding: 4px 1px 0 2px !important;
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone .hybridZoneTitle > span,
+  .hybridMyExpeditionZone .hybridZoneTitle > span {
+    font-size: 8px !important;
+    gap: 2px !important;
+  }
+
+  .hybridOpponentZone #opponentName,
+  .hybridMyExpeditionZone #myName,
+  .inlineLiveTotal {
+    font-size: 6.8px !important;
+    max-width: 62px !important;
+  }
+
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+    min-width: 0 !important;
+  }
+
+  /* Opponent very compact */
+  .hybridOpponentZone .expedition {
+    grid-template-columns: 48px minmax(0,1fr) !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 1px !important;
+    column-gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child {
+    font-size: 7px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 6px !important;
+  }
+
+  .hybridOpponentZone .stack {
+    height: 28px !important;
+    min-height: 28px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 21px !important;
+    height: 29px !important;
+    flex: 0 0 21px !important;
+  }
+
+  .hybridOpponentZone .stack .card + .card {
+    margin-left: -2px !important;
+  }
+
+  /* My expedition larger and easier to read */
+  .hybridMyExpeditionZone .expedition {
+    grid-template-columns: 71px minmax(0,1fr) !important;
+    height: 43px !important;
+    min-height: 43px !important;
+    padding: 0 1px !important;
+    column-gap: 0 !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding: 0 !important;
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 7.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount,
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 6.4px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 8px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    height: 41px !important;
+    min-height: 41px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 31px !important;
+    height: 43px !important;
+    flex: 0 0 31px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card + .card {
+    margin-left: -2px !important;
+  }
+
+  /* Discard between my expedition and hand, label on the left */
+  .hybridDiscardZone {
+    display: grid !important;
+    grid-template-columns: 58px minmax(0,1fr) !important;
+    column-gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 37px !important;
+    min-height: 37px !important;
+    padding: 1px 2px !important;
+    margin: 0 0 2px !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridDiscardZone .hybridZoneTitle {
+    grid-column: 1 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 4px 1px 0 2px !important;
+    font-size: 7.5px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    grid-column: 2 !important;
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 24px !important;
+    height: 33px !important;
+  }
+
+  /* Hand title also sits left instead of above */
+  .hybridHandZone {
+    display: grid !important;
+    grid-template-columns: 58px minmax(0,1fr) !important;
+    column-gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 2px !important;
+    margin: 0 !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hybridHandHeader {
+    grid-column: 1 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 4px 1px 0 2px !important;
+    font-size: 7.5px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+  }
+
+  .hybridHandZone .hand {
+    grid-column: 2 !important;
+    display: grid !important;
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  .hybridHandZone .hand .card .cardNumber {
+    font-size: clamp(13px,4.7vw,18px) !important;
+  }
+
+  .mobileActionDock {
+    left: 2px !important;
+    right: 2px !important;
+    bottom: max(2px,env(safe-area-inset-bottom)) !important;
+    padding: 3px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 19px !important;
+    margin-bottom: 2px !important;
+    font-size: 8px !important;
+  }
+
+  .mobileActionButtons {
+    gap: 3px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 34px !important;
+    padding: 4px !important;
+    font-size: 10px !important;
+  }
+
+  .drawRail,
+  .fallbackActions,
+  .hybridLiveScoreZone {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   v6.6 MOBILE TOP LABEL RESTORE
+   Desktop keeps v6.5 side-label layout.
+   Mobile restores compact top labels for readability.
+   ========================================================= */
+@media (max-width: 760px) and (orientation: portrait) {
+
+  /* Each zone returns to a normal vertical flow:
+     compact header on top, content directly below. */
+  .hybridOpponentZone,
+  .hybridMyExpeditionZone,
+  .hybridDiscardZone,
+  .hybridHandZone {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 2px !important;
+    margin: 0 0 2px !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+
+  /* Very shallow headers so vertical height barely grows. */
+  .hybridOpponentZone .hybridZoneTitle,
+  .hybridMyExpeditionZone .hybridZoneTitle,
+  .hybridDiscardZone .hybridZoneTitle,
+  .hybridHandZone .hybridHandHeader {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 5px !important;
+    width: 100% !important;
+    height: 16px !important;
+    min-height: 16px !important;
+    margin: 0 0 1px !important;
+    padding: 0 2px !important;
+    line-height: 1 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+
+  .hybridOpponentZone .hybridZoneTitle > span,
+  .hybridMyExpeditionZone .hybridZoneTitle > span {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 9px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+  }
+
+  /* Nickname / ID sits on same header line, not below. */
+  .hybridOpponentZone .hybridZoneTitle > div,
+  .hybridMyExpeditionZone .hybridZoneTitle > div {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hybridOpponentZone #opponentName,
+  .hybridMyExpeditionZone #myName {
+    display: inline !important;
+    max-width: 90px !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    opacity: .75 !important;
+  }
+
+  /* Total stays on the same My Expedition header line. */
+  .inlineLiveTotal {
+    display: inline !important;
+    margin-left: 3px !important;
+    font-size: 7.5px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Expeditions now use the full width again */
+  .hybridOpponentZone .expeditionGrid,
+  .hybridMyExpeditionZone .expeditionGrid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Opponent remains highly compressed */
+  .hybridOpponentZone .expedition {
+    display: grid !important;
+    grid-template-columns: 49px minmax(0,1fr) !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 1px !important;
+    column-gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:first-child {
+    font-size: 7.5px !important;
+  }
+
+  .hybridOpponentZone .expeditionTitle > span:last-child {
+    font-size: 6.2px !important;
+  }
+
+  .hybridOpponentZone .stack {
+    height: 28px !important;
+    min-height: 28px !important;
+  }
+
+  .hybridOpponentZone .stack .card {
+    width: 22px !important;
+    height: 30px !important;
+    flex: 0 0 22px !important;
+  }
+
+  /* My expedition keeps larger cards / readability */
+  .hybridMyExpeditionZone .expedition {
+    display: grid !important;
+    grid-template-columns: 73px minmax(0,1fr) !important;
+    height: 43px !important;
+    min-height: 43px !important;
+    padding: 0 1px !important;
+    column-gap: 0 !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle {
+    padding: 0 !important;
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionTitle > span:first-child {
+    font-size: 7.8px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionMeta {
+    gap: 1px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionCount,
+  .hybridMyExpeditionZone .expeditionDivider {
+    font-size: 6.5px !important;
+  }
+
+  .hybridMyExpeditionZone .expeditionLiveScore {
+    font-size: 8.2px !important;
+  }
+
+  .hybridMyExpeditionZone .stack {
+    height: 41px !important;
+    min-height: 41px !important;
+  }
+
+  .hybridMyExpeditionZone .stack .card {
+    width: 31px !important;
+    height: 43px !important;
+    flex: 0 0 31px !important;
+  }
+
+  /* Discard label back on top, but only a 14px header */
+  .hybridDiscardZone .hybridZoneTitle {
+    height: 14px !important;
+    min-height: 14px !important;
+    margin-bottom: 0 !important;
+    font-size: 8px !important;
+    font-weight: 900 !important;
+  }
+
+  .hybridDiscardZone .discardGrid {
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    width: 100% !important;
+    height: 34px !important;
+    min-height: 34px !important;
+  }
+
+  .hybridDiscardZone .discardPile {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+  }
+
+  .hybridDiscardZone .discardPile > .card {
+    width: 24px !important;
+    height: 33px !important;
+  }
+
+  /* Hand label back on top, one shallow line */
+  .hybridHandZone .hybridHandHeader {
+    height: 14px !important;
+    min-height: 14px !important;
+    margin-bottom: 1px !important;
+    font-size: 8px !important;
+    font-weight: 900 !important;
+  }
+
+  .hybridHandZone .hand {
+    display: grid !important;
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hybridHandZone .hand .card {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  /* Goal popup remains unchanged at upper-right */
+  .mobileGoalToggle {
+    right: 4px !important;
+    left: auto !important;
+    top: max(4px, env(safe-area-inset-top)) !important;
+  }
+}
+
+
+/* =========================================================
+   v6.7 COLOR FLOW BOARD
+   One row per color: Opponent -> Discard -> Me
+   Desktop: drag-and-drop
+   Mobile: tap/select buttons
+   ========================================================= */
+
+:root {
+  --flow-gap: 4px;
+}
+
+/* shared */
+.flowBoard {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.flowTopBar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 6px !important;
+  width: 100% !important;
+}
+
+.flowPlayer {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
+
+.flowMyPlayer {
+  justify-content: flex-end !important;
+}
+
+.flowCenterLabel {
+  text-align: center !important;
+  font-weight: 900 !important;
+  opacity: .78 !important;
+}
+
+.flowTotal {
+  white-space: nowrap !important;
+}
+
+.flowMatrix {
+  display: grid !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.flowOpponentZone,
+.flowDiscardZone,
+.flowMyZone,
+.flowOpponentGrid,
+.flowDiscardGrid,
+.flowMyGrid {
+  display: contents !important;
+}
+
+/* every generated child participates directly in the common matrix */
+.flowOpponentGrid > .expedition,
+.flowDiscardGrid > .discardPile,
+.flowMyGrid > .expedition {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* fixed row placement: red/yellow/green/blue/white */
+.flowOpponentGrid > :nth-child(1),
+.flowDiscardGrid > :nth-child(1),
+.flowMyGrid > :nth-child(1) { grid-row: 1 !important; }
+
+.flowOpponentGrid > :nth-child(2),
+.flowDiscardGrid > :nth-child(2),
+.flowMyGrid > :nth-child(2) { grid-row: 2 !important; }
+
+.flowOpponentGrid > :nth-child(3),
+.flowDiscardGrid > :nth-child(3),
+.flowMyGrid > :nth-child(3) { grid-row: 3 !important; }
+
+.flowOpponentGrid > :nth-child(4),
+.flowDiscardGrid > :nth-child(4),
+.flowMyGrid > :nth-child(4) { grid-row: 4 !important; }
+
+.flowOpponentGrid > :nth-child(5),
+.flowDiscardGrid > :nth-child(5),
+.flowMyGrid > :nth-child(5) { grid-row: 5 !important; }
+
+.flowOpponentGrid > .expedition { grid-column: 1 !important; }
+.flowDiscardGrid > .discardPile { grid-column: 2 !important; }
+.flowMyGrid > .expedition { grid-column: 3 !important; }
+
+.flowOpponentGrid > .expedition,
+.flowMyGrid > .expedition {
+  display: grid !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.flowOpponentGrid .expeditionTitle,
+.flowMyGrid .expeditionTitle {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+}
+
+.flowOpponentGrid .stack,
+.flowMyGrid .stack {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowOpponentGrid .stack .card,
+.flowMyGrid .stack .card {
+  position: static !important;
+  transform: none !important;
+  flex: 0 0 auto !important;
+}
+
+.flowDiscardGrid > .discardPile {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.flowDiscardZone.dropTarget.dragOver {
+  outline: 3px solid rgba(255,255,255,.9) !important;
+  outline-offset: -3px !important;
+  filter: brightness(1.12) !important;
+}
+
+.hybridLiveScoreZone,
+.fallbackActions {
+  display: none !important;
+}
+
+/* ---------------- DESKTOP ---------------- */
+@media (min-width: 761px) {
+  html, body {
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .appShell {
+    width: calc(100% - 10px) !important;
+    max-width: 1780px !important;
+    height: 100vh !important;
+    margin: 0 auto !important;
+    padding: 5px 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .hybridGame {
+    display: grid !important;
+    grid-template-rows: minmax(0, 1fr) 124px !important;
+    gap: 5px !important;
+    width: 100% !important;
+    height: calc(100vh - 10px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowBoard {
+    display: grid !important;
+    grid-template-rows: 24px minmax(0, 1fr) 118px !important;
+    gap: 4px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowTopBar {
+    height: 24px !important;
+    padding: 0 6px !important;
+    font-size: 11px !important;
+  }
+
+  .flowTopBar .flowPlayer > strong:first-child {
+    font-size: 11px !important;
+    opacity: .72 !important;
+  }
+
+  #opponentName, #myName {
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  .flowTotal {
+    font-size: 12px !important;
+  }
+
+  .flowCenterLabel {
+    font-size: 11px !important;
+  }
+
+  .flowMatrix {
+    grid-template-columns: minmax(0, 1fr) 102px minmax(0, 1.18fr) !important;
+    grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+    gap: 3px 5px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowOpponentGrid > .expedition,
+  .flowMyGrid > .expedition {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 3px 5px !important;
+    border-radius: 7px !important;
+  }
+
+  .flowOpponentGrid > .expedition {
+    grid-template-columns: 72px minmax(0,1fr) !important;
+  }
+
+  .flowMyGrid > .expedition {
+    grid-template-columns: 112px minmax(0,1fr) !important;
+  }
+
+  .flowOpponentGrid .expeditionTitle > span:first-child,
+  .flowMyGrid .expeditionTitle > span:first-child {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowOpponentGrid .expeditionTitle > span:last-child,
+  .flowMyGrid .expeditionCount,
+  .flowMyGrid .expeditionDivider {
+    font-size: 9px !important;
+  }
+
+  .flowMyGrid .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowMyGrid .expeditionLiveScore {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowOpponentGrid .stack,
+  .flowMyGrid .stack {
+    height: 100% !important;
+    gap: 4px !important;
+  }
+
+  .flowOpponentGrid .stack .card {
+    width: clamp(38px, 3.4vw, 56px) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  .flowMyGrid .stack .card {
+    width: clamp(44px, 4vw, 64px) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+  }
+
+  .flowOpponentGrid .stack .card + .card,
+  .flowMyGrid .stack .card + .card {
+    margin-left: -4px !important;
+  }
+
+  .flowOpponentGrid .stack .card,
+  .flowMyGrid .stack .card {
+    font-size: clamp(15px, 1.6vw, 24px) !important;
+  }
+
+  .flowDiscardGrid > .discardPile {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 2px !important;
+    border-radius: 7px !important;
+  }
+
+  .flowDiscardGrid > .discardPile .card {
+    width: clamp(42px, 3.8vw, 58px) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    font-size: clamp(15px, 1.5vw, 22px) !important;
+  }
+
+  .flowDiscardGrid > .discardPile .count {
+    margin-top: 1px !important;
+    font-size: 8px !important;
+  }
+
+  /* Hand is a single big strip */
+  .flowHandZone {
+    display: grid !important;
+    grid-template-columns: 74px minmax(0,1fr) !important;
+    align-items: center !important;
+    gap: 4px !important;
+    width: 100% !important;
+    height: 118px !important;
+    min-height: 118px !important;
+    padding: 4px 6px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .flowHandZone .hybridHandHeader {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowHandZone .hybridHandHeader small {
+    display: none !important;
+  }
+
+  .flowHandZone .hand {
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    height: 108px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowHandZone .hand .card {
+    width: min(72px, 100%) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    justify-self: center !important;
+    font-size: clamp(19px, 2vw, 28px) !important;
+  }
+
+  /* Desktop uses drag, not action buttons */
+  .mobileActionDock {
+    display: none !important;
+  }
+
+  /* Goal is a compact popover on both form factors */
+  .mobileGoalToggle {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 500 !important;
+    top: 8px !important;
+    right: 8px !important;
+    left: auto !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+  }
+
+  .mobileGoalToggle #mobileGoalProgress {
+    display: none !important;
+  }
+
+  .hybridSidebar {
+    display: none !important;
+    position: fixed !important;
+    z-index: 490 !important;
+    top: 48px !important;
+    right: 8px !important;
+    left: auto !important;
+    width: 320px !important;
+    max-height: calc(100vh - 58px) !important;
+    overflow-y: auto !important;
+  }
+
+  .mobileGoalToggle:hover + .hybridSidebar,
+  .mobileGoalToggle:focus + .hybridSidebar,
+  .hybridSidebar:hover,
+  .hybridSidebar.mobileOpen {
+    display: block !important;
+  }
+
+  /* Deck draw button floats over bottom-right without stealing a full row */
+  .drawRail {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 430 !important;
+    right: 14px !important;
+    bottom: 14px !important;
+    width: 82px !important;
+    height: 82px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .hybridDrawCircle {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .hybridDrawLabel {
+    font-size: 9px !important;
+  }
+
+  .deckFaceCount {
+    font-size: 22px !important;
+  }
+
+  .drawHint {
+    display: none !important;
+  }
+}
+
+/* ---------------- MOBILE PORTRAIT ---------------- */
+@media (max-width: 760px) and (orientation: portrait) {
+  html, body {
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .appShell {
+    width: 100% !important;
+    height: 100vh !important;
+    padding: 2px 2px calc(62px + env(safe-area-inset-bottom)) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .hybridGame {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowBoard {
+    display: grid !important;
+    grid-template-rows: 22px minmax(0,1fr) 68px !important;
+    gap: 2px !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowTopBar {
+    height: 22px !important;
+    padding: 0 3px !important;
+    gap: 2px !important;
+  }
+
+  .flowTopBar .flowPlayer {
+    gap: 2px !important;
+  }
+
+  .flowTopBar .flowPlayer > strong:first-child {
+    display: none !important;
+  }
+
+  #opponentName, #myName {
+    max-width: 72px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 8px !important;
+  }
+
+  .flowTotal {
+    font-size: 8px !important;
+  }
+
+  .flowCenterLabel {
+    font-size: 7px !important;
+  }
+
+  /* asymmetric columns: opponent compact, discard tiny, mine dominant */
+  .flowMatrix {
+    grid-template-columns: 27% 14% 59% !important;
+    grid-template-rows: repeat(5, minmax(0,1fr)) !important;
+    gap: 2px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowOpponentGrid > .expedition,
+  .flowMyGrid > .expedition {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 1px 2px !important;
+    border-radius: 4px !important;
+  }
+
+  .flowOpponentGrid > .expedition {
+    grid-template-columns: 30px minmax(0,1fr) !important;
+  }
+
+  .flowMyGrid > .expedition {
+    grid-template-columns: 63px minmax(0,1fr) !important;
+  }
+
+  .flowOpponentGrid .expeditionTitle > span:first-child {
+    font-size: 6.8px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowOpponentGrid .expeditionTitle > span:last-child {
+    font-size: 5.7px !important;
+  }
+
+  .flowMyGrid .expeditionTitle > span:first-child {
+    font-size: 7.2px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowMyGrid .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowMyGrid .expeditionCount,
+  .flowMyGrid .expeditionDivider {
+    font-size: 5.8px !important;
+  }
+
+  .flowMyGrid .expeditionLiveScore {
+    font-size: 7px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowOpponentGrid .stack,
+  .flowMyGrid .stack {
+    height: 100% !important;
+    gap: 0 !important;
+  }
+
+  .flowOpponentGrid .stack .card {
+    width: clamp(20px, 5.8vw, 25px) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    font-size: clamp(9px, 2.7vw, 12px) !important;
+  }
+
+  .flowMyGrid .stack .card {
+    width: clamp(28px, 8vw, 34px) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    font-size: clamp(12px, 3.5vw, 16px) !important;
+  }
+
+  .flowOpponentGrid .stack .card + .card {
+    margin-left: -5px !important;
+  }
+
+  .flowMyGrid .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .flowDiscardGrid > .discardPile {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 1px !important;
+    border-radius: 4px !important;
+  }
+
+  .flowDiscardGrid > .discardPile .card {
+    width: clamp(24px, 6.8vw, 29px) !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    font-size: clamp(10px, 3vw, 13px) !important;
+  }
+
+  .flowDiscardGrid > .discardPile .count {
+    margin: 0 !important;
+    font-size: 5.5px !important;
+  }
+
+  /* hand stays big and readable */
+  .flowHandZone {
+    display: grid !important;
+    grid-template-columns: 42px minmax(0,1fr) !important;
+    align-items: center !important;
+    gap: 2px !important;
+    width: 100% !important;
+    height: 68px !important;
+    min-height: 68px !important;
+    padding: 2px !important;
+    margin: 0 !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+
+  .flowHandZone .hybridHandHeader {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 7px !important;
+    font-weight: 950 !important;
+    text-align: center !important;
+  }
+
+  .flowHandZone .hybridHandHeader small {
+    display: none !important;
+  }
+
+  .flowHandZone .hand {
+    display: grid !important;
+    grid-template-columns: repeat(8,minmax(0,1fr)) !important;
+    gap: 1px !important;
+    width: 100% !important;
+    height: 64px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowHandZone .hand .card {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 5 / 7 !important;
+    font-size: clamp(13px, 4.7vw, 18px) !important;
+  }
+
+  /* tap actions */
+  .mobileActionDock {
+    display: block !important;
+    position: fixed !important;
+    z-index: 450 !important;
+    left: 2px !important;
+    right: 2px !important;
+    bottom: max(2px,env(safe-area-inset-bottom)) !important;
+    padding: 3px !important;
+    border-radius: 7px !important;
+  }
+
+  .mobileSelectedInfo {
+    min-height: 18px !important;
+    margin-bottom: 2px !important;
+    padding: 0 2px !important;
+    font-size: 7.5px !important;
+  }
+
+  .mobileActionButtons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 3px !important;
+  }
+
+  .mobileActionButtons button {
+    min-height: 34px !important;
+    padding: 3px !important;
+    font-size: 9.5px !important;
+  }
+
+  .drawRail {
+    display: none !important;
+  }
+
+  .mobileGoalToggle {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 500 !important;
+    top: max(3px, env(safe-area-inset-top)) !important;
+    right: 3px !important;
+    left: auto !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+  }
+
+  .mobileGoalToggle #mobileGoalProgress {
+    display: none !important;
+  }
+
+  .hybridSidebar {
+    position: fixed !important;
+    z-index: 490 !important;
+    top: 34px !important;
+    right: 3px !important;
+    left: auto !important;
+    width: min(280px,calc(100vw - 6px)) !important;
+    max-height: calc(100vh - 40px) !important;
+    overflow-y: auto !important;
+  }
+}
+
+
+/* =========================================================
+   v6.8 STABLE COLOR FLOW ROWS
+   Five real DOM rows. Fixes collapsed v6.7 board.
+   ========================================================= */
+
+.flowDataSource {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  max-width: 1px !important;
+  max-height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.flowMatrix {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.flowRows {
+  display: grid !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  gap: 3px !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowColorRow {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowCell {
+  position: relative !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 7px !important;
+}
+
+.flowCell > .expedition,
+.flowCell > .discardPile {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+.flowCell > .expedition {
+  display: grid !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.flowCell .expeditionTitle {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.flowCell .stack {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.flowCell .stack .card {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  flex: 0 0 auto !important;
+}
+
+.flowCellDiscard > .discardPile {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1px !important;
+}
+
+.flowCell.dragOver {
+  outline: 3px solid rgba(255,255,255,.88) !important;
+  outline-offset: -3px !important;
+  filter: brightness(1.12) !important;
+}
+
+/* Desktop */
+@media (min-width: 761px) {
+  .flowColorRow {
+    grid-template-columns: minmax(0,1fr) 104px minmax(0,1.18fr) !important;
+  }
+
+  .flowCellOpponent > .expedition {
+    grid-template-columns: 72px minmax(0,1fr) !important;
+    padding: 3px 5px !important;
+  }
+
+  .flowCellMine > .expedition {
+    grid-template-columns: 112px minmax(0,1fr) !important;
+    padding: 3px 5px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:first-child,
+  .flowCellMine .expeditionTitle > span:first-child {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:last-child,
+  .flowCellMine .expeditionCount,
+  .flowCellMine .expeditionDivider {
+    font-size: 9px !important;
+  }
+
+  .flowCellMine .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowCellMine .expeditionLiveScore {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowCellOpponent .stack .card {
+    width: clamp(38px,3.4vw,56px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellMine .stack .card {
+    width: clamp(44px,4vw,64px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellOpponent .stack .card + .card,
+  .flowCellMine .stack .card + .card {
+    margin-left: -4px !important;
+  }
+
+  .flowCellDiscard > .discardPile .card {
+    width: clamp(42px,3.8vw,58px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellDiscard > .discardPile .count {
+    margin-top: 1px !important;
+    font-size: 8px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width:760px) and (orientation:portrait) {
+  .flowRows {
+    gap: 2px !important;
+  }
+
+  .flowColorRow {
+    grid-template-columns: 27% 14% 59% !important;
+    gap: 2px !important;
+  }
+
+  .flowCellOpponent > .expedition {
+    grid-template-columns: 30px minmax(0,1fr) !important;
+    padding: 1px 2px !important;
+  }
+
+  .flowCellMine > .expedition {
+    grid-template-columns: 63px minmax(0,1fr) !important;
+    padding: 1px 2px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:first-child {
+    font-size: 6.8px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:last-child {
+    font-size: 5.7px !important;
+  }
+
+  .flowCellMine .expeditionTitle > span:first-child {
+    font-size: 7.2px !important;
+  }
+
+  .flowCellMine .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowCellMine .expeditionCount,
+  .flowCellMine .expeditionDivider {
+    font-size: 5.8px !important;
+  }
+
+  .flowCellMine .expeditionLiveScore {
+    font-size: 7px !important;
+  }
+
+  .flowCellOpponent .stack .card {
+    width: clamp(20px,5.8vw,25px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellMine .stack .card {
+    width: clamp(28px,8vw,34px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellOpponent .stack .card + .card {
+    margin-left: -5px !important;
+  }
+
+  .flowCellMine .stack .card + .card {
+    margin-left: -3px !important;
+  }
+
+  .flowCellDiscard > .discardPile .card {
+    width: clamp(24px,6.8vw,29px) !important;
+    height: auto !important;
+    aspect-ratio: 5/7 !important;
+  }
+
+  .flowCellDiscard > .discardPile .count {
+    margin: 0 !important;
+    font-size: 5.5px !important;
+  }
+}
+
+
+/* =========================================================
+   v6.9 DESKTOP SKETCH LAYOUT
+   Desktop only. Mobile v6.8 rules are intentionally untouched.
+   Reference: user-provided wireframe proportions and spacing.
+   ========================================================= */
+
+.desktopGameTitle {
+  display: none;
+}
+
+@media (min-width: 761px) {
+
+  /* Entire viewport is a single stable game board. */
+  html, body {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .appShell {
+    width: 100% !important;
+    max-width: none !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 10px 18px 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hybridGame {
+    display: grid !important;
+    grid-template-columns: 150px minmax(0, 1fr) 92px !important;
+    grid-template-rows: 42px minmax(0, 1fr) 126px !important;
+    column-gap: 10px !important;
+    row-gap: 8px !important;
+    width: 100% !important;
+    height: calc(100vh - 22px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  /* Header bar matching the wireframe. */
+  .desktopGameTitle {
+    display: flex !important;
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 42px !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    border-radius: 8px !important;
+    background: rgba(13,29,25,.80) !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    letter-spacing: .08em !important;
+  }
+
+  /* Goals: permanently visible left rail, 5 large blocks. */
+  .mobileGoalToggle {
+    display: none !important;
+  }
+
+  .hybridSidebar {
+    display: grid !important;
+    position: static !important;
+    grid-column: 1 !important;
+    grid-row: 2 / 4 !important;
+    grid-template-rows: 34px minmax(0, 1fr) !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 100% !important;
+    max-height: none !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+  }
+
+  .goalSidebarHeader {
+    height: 34px !important;
+    margin: 0 !important;
+    padding: 4px 5px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .goalSidebarHeader strong {
+    font-size: 12px !important;
+  }
+
+  .goalSidebarHeader span {
+    display: none !important;
+  }
+
+  .goalList {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .goalItem {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    padding: 7px 8px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+    border-radius: 6px !important;
+  }
+
+  .hybridSidebar .historySide {
+    display: none !important;
+  }
+
+  /* Main board occupies the large center/right area. */
+  .flowBoard {
+    grid-column: 2 / 4 !important;
+    grid-row: 2 / 4 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 34px minmax(0, 1fr) 126px !important;
+    gap: 6px !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Column headings: opponent / discard / me. */
+  .flowTopBar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 116px minmax(0, 1.14fr) !important;
+    align-items: end !important;
+    gap: 10px !important;
+    width: 100% !important;
+    height: 34px !important;
+    padding: 0 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .flowOpponentPlayer,
+  .flowMyPlayer {
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    height: 28px !important;
+    padding: 5px 10px !important;
+    border: 1px solid rgba(255,255,255,.13) !important;
+    border-radius: 7px 7px 0 0 !important;
+    background: rgba(15,30,27,.62) !important;
+  }
+
+  .flowMyPlayer {
+    justify-content: space-between !important;
+  }
+
+  .flowOpponentPlayer > strong:first-child,
+  .flowMyPlayer > strong:first-child {
+    display: inline !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  #opponentName,
+  #myName {
+    max-width: 150px !important;
+    font-size: 11px !important;
+    font-weight: 750 !important;
+    opacity: .84 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .flowTotal {
+    margin-left: auto !important;
+    font-size: 13px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowCenterLabel {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 28px !important;
+    padding: 5px 3px !important;
+    border: 1px solid rgba(255,255,255,.13) !important;
+    border-radius: 7px 7px 0 0 !important;
+    background: rgba(15,30,27,.62) !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+  }
+
+  /* Big five-row matrix, intentionally generous. */
+  .flowMatrix {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowRows {
+    display: grid !important;
+    grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+
+  .flowColorRow {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 116px minmax(0, 1.14fr) !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowCell {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+
+  /* Opponent row. */
+  .flowCellOpponent > .expedition {
+    display: grid !important;
+    grid-template-columns: 74px minmax(0, 1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 5px 8px !important;
+    column-gap: 2px !important;
+    overflow: hidden !important;
+  }
+
+  /* My row, slightly wider label for count/score. */
+  .flowCellMine > .expedition {
+    display: grid !important;
+    grid-template-columns: 128px minmax(0, 1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 5px 8px !important;
+    column-gap: 2px !important;
+    overflow: hidden !important;
+  }
+
+  .flowCellOpponent .expeditionTitle,
+  .flowCellMine .expeditionTitle {
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 2px !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:first-child,
+  .flowCellMine .expeditionTitle > span:first-child {
+    font-size: 13px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowCellOpponent .expeditionTitle > span:last-child {
+    font-size: 10px !important;
+  }
+
+  .flowCellMine .expeditionMeta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    white-space: nowrap !important;
+  }
+
+  .flowCellMine .expeditionCount,
+  .flowCellMine .expeditionDivider {
+    font-size: 10px !important;
+  }
+
+  .flowCellMine .expeditionLiveScore {
+    font-size: 13px !important;
+    font-weight: 950 !important;
+  }
+
+  /* Cards are deliberately large. No tiny clamp collapse. */
+  .flowCellOpponent .stack,
+  .flowCellMine .stack {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowCellOpponent .stack .card {
+    width: 62px !important;
+    height: 87px !important;
+    flex: 0 0 62px !important;
+    font-size: 21px !important;
+  }
+
+  .flowCellMine .stack .card {
+    width: 66px !important;
+    height: 92px !important;
+    flex: 0 0 66px !important;
+    font-size: 23px !important;
+  }
+
+  .flowCellOpponent .stack .card + .card,
+  .flowCellMine .stack .card + .card {
+    margin-left: -7px !important;
+  }
+
+  /* Discard column is a true narrow lane, centered and readable. */
+  .flowCellDiscard > .discardPile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 3px !important;
+    overflow: hidden !important;
+  }
+
+  .flowCellDiscard > .discardPile .card {
+    width: 58px !important;
+    height: 81px !important;
+    flex: 0 0 58px !important;
+    font-size: 20px !important;
+  }
+
+  .flowCellDiscard > .discardPile .count {
+    margin-top: 2px !important;
+    font-size: 9px !important;
+  }
+
+  /* Bottom hand strip mirrors the sketch proportions. */
+  .flowHandZone {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 7px 104px 7px 10px !important;
+    margin: 0 !important;
+    border-radius: 7px !important;
+    overflow: hidden !important;
+  }
+
+  .flowHandZone .hybridHandHeader {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    font-weight: 950 !important;
+  }
+
+  .flowHandZone .hybridHandHeader small {
+    display: none !important;
+  }
+
+  .flowHandZone .hand {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    height: 112px !important;
+    min-height: 112px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .flowHandZone .hand .card {
+    width: 72px !important;
+    height: 101px !important;
+    flex: 0 0 72px !important;
+    font-size: 25px !important;
+  }
+
+  /* Deck sits at the bottom-right, like the wireframe. */
+  .drawRail {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 430 !important;
+    right: 8px !important;
+    bottom: 7px !important;
+    width: 88px !important;
+    height: 112px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
+  }
+
+  .drawRail #drawDeck {
+    pointer-events: auto !important;
+  }
+
+  .hybridDrawCircle {
+    width: 82px !important;
+    height: 82px !important;
+  }
+
+  .hybridDrawLabel {
+    font-size: 10px !important;
+  }
+
+  .deckFaceCount {
+    font-size: 25px !important;
+  }
+
+  .drawHint {
+    display: none !important;
+  }
+
+  /* Desktop remains drag-first. */
+  .mobileActionDock {
+    display: none !important;
+  }
+
+  .hybridLiveScoreZone,
+  .fallbackActions {
+    display: none !important;
+  }
+
+  /* ===== REDESIGN v7.2: mine (wide, left) <-> opponent (narrow, right) swap ===== */
+  .flowTopBar {
+    grid-template-columns: minmax(0, 1.25fr) 116px minmax(0, 0.85fr) !important;
+  }
+  .flowOpponentPlayer { order: 3 !important; justify-content: flex-end !important; }
+  .flowCenterLabel { order: 2 !important; }
+  .flowMyPlayer { order: 1 !important; }
+
+  .flowColorRow {
+    grid-template-columns: minmax(0, 1.25fr) 116px minmax(0, 0.85fr) !important;
+  }
+  .flowCellOpponent { order: 3 !important; }
+  .flowCellDiscard { order: 2 !important; }
+  .flowCellMine { order: 1 !important; }
+
+  /* Opponent side is now the secondary column: slightly toned down. */
+  .flowCellOpponent > .expedition {
+    opacity: .82 !important;
+  }
+
+  /* ===== REDESIGN v7.2: clear my-turn / opponent-turn board glow ===== */
+  body.turn-me .flowBoard {
+    border: 1.5px solid rgba(246, 198, 56, .85) !important;
+    box-shadow: 0 0 0 3px rgba(246, 198, 56, .16), 0 0 34px rgba(246, 198, 56, .22) !important;
+    border-radius: 10px !important;
+  }
+  body.turn-opponent .flowBoard {
+    border: 1.5px solid rgba(64, 176, 100, .75) !important;
+    box-shadow: 0 0 0 3px rgba(64, 176, 100, .14), 0 0 34px rgba(64, 176, 100, .18) !important;
+    border-radius: 10px !important;
+  }
+
+  /* ===== REDESIGN v7.2: dim play targets / highlight draw sources by phase ===== */
+  body.phase-draw .flowCellMine > .expedition,
+  body.phase-draw .flowCellOpponent > .expedition {
+    opacity: .45 !important;
+    transition: opacity .18s ease;
+  }
+  body.phase-play .discardPile {
+    opacity: .55 !important;
+    transition: opacity .18s ease;
+  }
+  body.phase-draw .discardPile.hasCard {
+    opacity: 1 !important;
+    outline: 1.5px dashed rgba(79, 174, 140, .55) !important;
+    outline-offset: -2px !important;
+  }
+  body.phase-draw #drawDeck {
+    outline: 1.5px dashed rgba(79, 174, 140, .55) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Bigger click target for discard piles (whole cell, not just the card). */
+  .flowCellDiscard {
+    cursor: pointer !important;
+  }
+
+  /* ===== REDESIGN v7.2: score change flash ===== */
+  .expeditionLiveScore.scoreFlash {
+    animation: expeditionScoreFlash .5s ease !important;
+  }
+  @keyframes expeditionScoreFlash {
+    0% { transform: scale(1.35); color: #ffe08a; }
+    100% { transform: scale(1); }
+  }
+}
+
+
+/* =========================================================
+   v7.9.1 transparency fix only
+   - keep expedition cards/text fully bright
+   - make only expedition artwork semi-transparent
+   - remove phase/opponent opacity dimming
+   ========================================================= */
+
+@media (min-width: 761px) {
+  /* Never dim the full expedition panels by phase or side */
+  .flowCellMine > .expedition,
+  .flowCellOpponent > .expedition,
+  body.phase-play .flowCellMine > .expedition,
+  body.phase-play .flowCellOpponent > .expedition,
+  body.phase-draw .flowCellMine > .expedition,
+  body.phase-draw .flowCellOpponent > .expedition {
+    opacity: 1 !important;
+  }
+
+  /* Let the page background show through behind the expedition art */
+  .flowCellMine,
+  .flowCellOpponent {
+    background: transparent !important;
+  }
+
+  .flowCellMine > .expedition,
+  .flowCellOpponent > .expedition {
+    position: relative !important;
+    background: transparent !important;
+    background-image: none !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+  }
+
+  .flowCellMine > .expedition > *,
+  .flowCellOpponent > .expedition > * {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .flowCellMine > .expedition::before,
+  .flowCellOpponent > .expedition::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100% !important;
+    opacity: .65 !important;
+    filter: saturate(.58) brightness(.78) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .flowCellMine > .expedition::after,
+  .flowCellOpponent > .expedition::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(22, 16, 10, .12) !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  .flowCellMine > .expedition[data-color="red"]::before,
+  .flowCellOpponent > .expedition[data-color="red"]::before {
+    background-image: url("/assets/expedition-red.png") !important;
+  }
+  .flowCellMine > .expedition[data-color="yellow"]::before,
+  .flowCellOpponent > .expedition[data-color="yellow"]::before {
+    background-image: url("/assets/expedition-yellow.png") !important;
+  }
+  .flowCellMine > .expedition[data-color="green"]::before,
+  .flowCellOpponent > .expedition[data-color="green"]::before {
+    background-image: url("/assets/expedition-green.png") !important;
+  }
+  .flowCellMine > .expedition[data-color="blue"]::before,
+  .flowCellOpponent > .expedition[data-color="blue"]::before {
+    background-image: url("/assets/expedition-blue.png") !important;
+  }
+  .flowCellMine > .expedition[data-color="white"]::before,
+  .flowCellOpponent > .expedition[data-color="white"]::before {
+    background-image: url("/assets/expedition-white.png") !important;
+  }
+}
