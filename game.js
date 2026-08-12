@@ -286,12 +286,51 @@ function setupMobileTapTargets(){
 
 function renderMobileGoalProgress(){if(!isMobileMode()||!$('mobileGoalProgress'))return;const goals=state?.goals||[];$('mobileGoalProgress').textContent=`${goals.filter(g=>g.status?.state==='claimed').length}/${goals.length||5}`}
 
+
+function goalOwnedByMe(goal) {
+  if (!state || !goal) return false;
+  if (goal.claimedBy === state.me) return true;
+  return Boolean(state.finished && goal.resolvedBy === state.me);
+}
+
+function myEarnedGoalPoints() {
+  if (!state) return 0;
+  return (state.goals || []).reduce((sum, goal) => {
+    return sum + (goalOwnedByMe(goal) ? Number(goal.points || 0) : 0);
+  }, 0);
+}
+
+function renderClaimedGoals() {
+  const tray = $("claimedGoalsTray");
+  const totalEl = $("myGoalPointTotal");
+  if (!tray) return;
+
+  const owned = (state.goals || []).filter(goalOwnedByMe);
+  const points = owned.reduce((sum, goal) => sum + Number(goal.points || 0), 0);
+
+  if (totalEl) totalEl.textContent = `+${points}`;
+
+  tray.innerHTML = "";
+  owned.forEach(goal => {
+    const card = document.createElement("div");
+    card.className = "claimedGoalCard";
+    card.title = goal.desc || goal.title;
+    card.innerHTML = `
+      <span class="claimedGoalTitle">${goal.title}</span>
+      <strong class="claimedGoalPoint">+${goal.points}</strong>
+    `;
+    tray.appendChild(card);
+  });
+}
+
 function renderGoalSidebar() {
   const list = $("goalList");
   if (!list) return;
 
   list.innerHTML = "";
   (state.goals || []).forEach(goal => {
+    if (!isMobileMode() && goalOwnedByMe(goal)) return;
+
     const item = document.createElement("div");
     const done = goal.status?.state === "claimed";
     const compare = goal.status?.state === "compare";
@@ -308,11 +347,15 @@ function renderGoalSidebar() {
   });
 
   const byColor = {};
-  let liveTotal = 0;
+  let expeditionTotal = 0;
   for (const color of COLORS) {
     byColor[color] = expeditionScoreForLive(state.expeditions[state.me][color]);
-    liveTotal += byColor[color];
+    expeditionTotal += byColor[color];
   }
+
+  const liveTotal = state.finished && state.scores
+    ? state.scores[state.me].total
+    : expeditionTotal + myEarnedGoalPoints();
   if ($("myExpeditionTotal")) {
     const totalEl = $("myExpeditionTotal");
     totalEl.textContent = liveTotal;
@@ -735,6 +778,7 @@ function render() {
   renderDiscards();
   renderHand();
   renderGoalSidebar();
+  renderClaimedGoals();
   renderOpponentFinalHand();
   renderScores();
   setupMobileTapTargets();

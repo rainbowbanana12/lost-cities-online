@@ -122,6 +122,24 @@
           </div>
         </section>
 
+        <aside class="drawRail">
+          <div id="drawDeck" class="drawDeck hybridDrawButton" title="덱에서 카드 뽑기">
+            <div class="hybridDrawCircle">
+              <span id="drawActionLabel" class="hybridDrawLabel">뽑기 더미</span>
+              <strong id="deckFaceCount" class="deckFaceCount">0</strong>
+            </div>
+            <span id="drawActionHint" class="drawHint">클릭해서 1장 뽑기</span>
+          </div>
+        </aside>
+
+        <section id="claimedGoalsZone" class="claimedGoalsZone" aria-label="내가 획득한 목표카드">
+          <div class="claimedGoalsHeader">
+            <span>획득 목표</span>
+            <strong id="myGoalPointTotal">+0</strong>
+          </div>
+          <div id="claimedGoalsTray" class="claimedGoalsTray"></div>
+        </section>
+
         <section class="hybridLiveScoreZone">
           <div class="hybridScoreHeader">
             <span>현재 내 색깔별 점수</span>
@@ -130,16 +148,6 @@
           <div id="myLiveByColor" class="hybridLiveScores"></div>
         </section>
       </section>
-
-      <aside class="drawRail">
-        <div id="drawDeck" class="drawDeck hybridDrawButton" title="덱에서 카드 뽑기">
-          <div class="hybridDrawCircle">
-            <span id="drawActionLabel" class="hybridDrawLabel">뽑기 더미</span>
-            <strong id="deckFaceCount" class="deckFaceCount">0</strong>
-          </div>
-          <span id="drawActionHint" class="drawHint">클릭해서 1장 뽑기</span>
-        </div>
-      </aside>
 
       <!-- Old score panel kept only because v3+ JS binds restartBtn here -->
       <aside id="scorePanel" class="endScorePanel hidden">
