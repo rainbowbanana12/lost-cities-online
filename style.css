@@ -6225,4 +6225,70 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
   .fallbackActions {
     display: none !important;
   }
+
+  /* ===== REDESIGN v7.2: mine (wide, left) <-> opponent (narrow, right) swap ===== */
+  .flowTopBar {
+    grid-template-columns: minmax(0, 1.25fr) 116px minmax(0, 0.85fr) !important;
+  }
+  .flowOpponentPlayer { order: 3 !important; justify-content: flex-end !important; }
+  .flowCenterLabel { order: 2 !important; }
+  .flowMyPlayer { order: 1 !important; }
+
+  .flowColorRow {
+    grid-template-columns: minmax(0, 1.25fr) 116px minmax(0, 0.85fr) !important;
+  }
+  .flowCellOpponent { order: 3 !important; }
+  .flowCellDiscard { order: 2 !important; }
+  .flowCellMine { order: 1 !important; }
+
+  /* Opponent side is now the secondary column: slightly toned down. */
+  .flowCellOpponent > .expedition {
+    opacity: .82 !important;
+  }
+
+  /* ===== REDESIGN v7.2: clear my-turn / opponent-turn board glow ===== */
+  body.turn-me .flowBoard {
+    border: 1.5px solid rgba(246, 198, 56, .85) !important;
+    box-shadow: 0 0 0 3px rgba(246, 198, 56, .16), 0 0 34px rgba(246, 198, 56, .22) !important;
+    border-radius: 10px !important;
+  }
+  body.turn-opponent .flowBoard {
+    border: 1.5px solid rgba(64, 176, 100, .75) !important;
+    box-shadow: 0 0 0 3px rgba(64, 176, 100, .14), 0 0 34px rgba(64, 176, 100, .18) !important;
+    border-radius: 10px !important;
+  }
+
+  /* ===== REDESIGN v7.2: dim play targets / highlight draw sources by phase ===== */
+  body.phase-draw .flowCellMine > .expedition,
+  body.phase-draw .flowCellOpponent > .expedition {
+    opacity: .45 !important;
+    transition: opacity .18s ease;
+  }
+  body.phase-play .discardPile {
+    opacity: .55 !important;
+    transition: opacity .18s ease;
+  }
+  body.phase-draw .discardPile.hasCard {
+    opacity: 1 !important;
+    outline: 1.5px dashed rgba(79, 174, 140, .55) !important;
+    outline-offset: -2px !important;
+  }
+  body.phase-draw #drawDeck {
+    outline: 1.5px dashed rgba(79, 174, 140, .55) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Bigger click target for discard piles (whole cell, not just the card). */
+  .flowCellDiscard {
+    cursor: pointer !important;
+  }
+
+  /* ===== REDESIGN v7.2: score change flash ===== */
+  .expeditionLiveScore.scoreFlash {
+    animation: expeditionScoreFlash .5s ease !important;
+  }
+  @keyframes expeditionScoreFlash {
+    0% { transform: scale(1.35); color: #ffe08a; }
+    100% { transform: scale(1); }
+  }
 }

@@ -9,6 +9,24 @@ const COLOR_NAMES = { red: "빨강", yellow: "노랑", green: "초록", blue: "�
 let state = null;
 const SESSION_KEY = "lostCitiesOnlineSession";
 
+// v7.2: remember last-rendered live score per color to detect changes for the flash animation.
+const prevLiveScoreByColor = {};
+
+// v7.2: shrink card overlap dynamically so an expedition with many cards never
+// overflows its fixed-width cell (instead of being clipped by overflow:hidden).
+function fitStackOverlap(stackEl) {
+  const cards = Array.from(stackEl.children);
+  if (cards.length <= 1) return;
+  const cardWidth = cards[0].getBoundingClientRect().width || 24;
+  const cellWidth = stackEl.clientWidth || cardWidth * cards.length;
+  const neededStep = (cellWidth - cardWidth) / (cards.length - 1);
+  const overlap = Math.max(4, cardWidth - Math.max(4, neededStep));
+  cards.forEach((el, i) => {
+    if (i > 0) el.style.marginLeft = `-${overlap}px`;
+  });
+}
+
+
 function saveOnlineSession(code, token, name) {
   localStorage.setItem(SESSION_KEY, JSON.stringify({
     code,
@@ -428,6 +446,7 @@ function renderDiscards() {
 
     const top = state.discards[color];
     if (top) pile.appendChild(cardEl(top, true));
+    pile.classList.toggle("hasCard", Boolean(top));
 
     const count = document.createElement("span");
     count.className = "count";
@@ -526,6 +545,17 @@ function applyTurnBackground() {
   }
 }
 
+// v7.2: separate phase-based class so CSS can dim "play" targets during the
+// draw step and dim "draw" sources during the play step.
+function applyPhaseBackground() {
+  document.body.classList.remove("phase-play", "phase-draw");
+
+  if (!state || state.waiting || state.finished || !isMyTurn()) return;
+
+  document.body.classList.add(state.phase === "draw" ? "phase-draw" : "phase-play");
+}
+
+
 
 function syncFlowRows() {
   const host = $("flowRows");
@@ -551,12 +581,17 @@ function syncFlowRows() {
         liveScore < 0 ? "scoreNegative" :
         "scoreZero";
 
+      const flashClass = prevLiveScoreByColor[color] !== undefined && prevLiveScoreByColor[color] !== liveScore
+        ? " scoreFlash"
+        : "";
+      prevLiveScoreByColor[color] = liveScore;
+
       title.innerHTML = `
         <span>${COLOR_NAMES[color]}</span>
         <span class="expeditionMeta">
           <span class="expeditionCount">${expeditions[color].length}장</span>
           <span class="expeditionDivider">|</span>
-          <strong class="expeditionLiveScore ${scoreClass}">점수: ${liveScore}</strong>
+          <strong class="expeditionLiveScore ${scoreClass}${flashClass}">점수: ${liveScore}</strong>
         </span>`;
     } else {
       title.innerHTML = `
@@ -571,6 +606,7 @@ function syncFlowRows() {
     });
 
     box.append(title, stack);
+    fitStackOverlap(stack);
     return box;
   }
 
@@ -581,6 +617,7 @@ function syncFlowRows() {
 
     const top = state.discards[color];
     if (top) pile.appendChild(cardEl(top, true, false));
+    pile.classList.toggle("hasCard", Boolean(top));
 
     const count = document.createElement("span");
     count.className = "count";
@@ -620,8 +657,10 @@ function syncFlowRows() {
       // its color determines which discard pile receives it.
       wireDropTarget(middle, cardId => playById(cardId, "discard"));
 
+      // v7.2: the whole discard cell is the click target (not just the small
+      // pile), so users don't have to aim precisely to draw from discard.
       pile.style.cursor = state.canDrawCard ? "pointer" : "";
-      pile.addEventListener("click", () => {
+      middle.addEventListener("click", () => {
         if (state.phase === "draw") draw("discard", color);
       });
     }
@@ -689,6 +728,7 @@ function render() {
       : "상대방 진행 중";
 
   applyTurnBackground();
+  applyPhaseBackground();
   renderStatus();
   renderExpeditions($("myExpeditions"), state.expeditions[me], true);
   renderExpeditions($("opponentExpeditions"), state.expeditions[opp], false);
@@ -843,6 +883,14 @@ if($('mobileDrawButton'))$('mobileDrawButton').onclick=()=>{
   }
 };
 window.addEventListener('resize',()=>{if(!isMobileMode()){$('goalSidebar')?.classList.remove('mobileOpen');mobileSelectedCardId=null}renderMobileInteractionState()});
+
+// v7.2: recompute card-overlap spacing on resize (debounced) so expedition
+// rows stay correctly packed when the window/breakpoint changes.
+let resizeRenderTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeRenderTimer);
+  resizeRenderTimer = setTimeout(() => { if (state) render(); }, 150);
+});
 
 socket.on("notice", showToast);
 
