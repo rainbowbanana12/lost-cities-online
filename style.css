@@ -6868,72 +6868,54 @@ body {
 
 
 /* =========================================================
-   v7.7 BOARD TUNING
+   v7.8 ROLLBACK + ART FIX
+   v7.7 spacing changes are NOT included. Base is v7.6.
    ========================================================= */
 
-/* A little more breathing room around the whole play surface */
-body {
-  padding: 18px !important;
-  box-sizing: border-box !important;
-}
-.appShell {
-  width: min(calc(100vw - 36px), 1540px) !important;
-  margin: 0 auto !important;
-}
-.flowBoard {
-  width: 100% !important;
-  padding: 16px 18px 20px !important;
-}
-.flowMatrix {
-  padding: 8px 2px !important;
-}
-
-/* Slightly relax row density so expedition cells don't feel cramped */
-.flowCell {
-  padding: 0 6px !important;
-}
-.flowCell > .expedition,
-.flowCellDiscard > .discardPile {
-  margin: 0 auto !important;
-  width: calc(100% - 10px) !important;
-}
-.flowCell > .expedition {
-  padding: 10px 14px !important;
-}
-.flowCellDiscard > .discardPile {
-  padding: 10px 12px !important;
-}
-
-/* Expedition art should be more subdued and semi-transparent */
-.flowCell > .expedition {
+/* --- Expedition art: force old direct backgrounds off --- */
+.flowCellMine > .expedition,
+.flowCellOpponent > .expedition {
   position: relative !important;
-  background: rgba(255,255,255,0.02) !important;
+  background-image: none !important;
+  background-color: rgba(15, 24, 19, .34) !important;
   overflow: hidden !important;
 }
-.flowCell > .expedition::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  opacity: .7;
-  filter: saturate(.58) brightness(.78);
-  pointer-events: none;
-  z-index: 0;
+
+/* Dedicated art layer: exactly fitted to lane, 70% visible, less vivid */
+.flowCellMine > .expedition::before,
+.flowCellOpponent > .expedition::before {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: .70 !important;
+  filter: saturate(.58) brightness(.76) contrast(.92) !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
 }
-.flowCell > .expedition::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(26, 18, 10, 0.16);
-  pointer-events: none;
-  z-index: 0;
+
+.flowCellMine > .expedition::after,
+.flowCellOpponent > .expedition::after {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(8, 13, 10, .10) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
 }
-.flowCell > .expedition > * {
+
+.flowCellMine > .expedition > *,
+.flowCellOpponent > .expedition > * {
   position: relative !important;
   z-index: 1 !important;
 }
+
 .flowCellMine > .expedition[data-color="red"]::before,
 .flowCellOpponent > .expedition[data-color="red"]::before {
   background-image: url("/assets/expedition-red.png") !important;
@@ -6955,85 +6937,87 @@ body {
   background-image: url("/assets/expedition-green.png") !important;
 }
 
-/* Draw pile: remove label, enlarge coin, zoom art to hide white edges */
+/* --- Draw pile: no label, larger coin, crop image enough to hide white --- */
 .hybridDrawLabel,
 #drawActionLabel {
   display: none !important;
 }
+
 .drawRail {
-  width: 170px !important;
-  min-width: 170px !important;
+  overflow: visible !important;
 }
-.drawRail #drawDeck {
-  width: 150px !important;
-  margin: 0 auto !important;
-}
+
 .hybridDrawCircle {
-  width: 132px !important;
-  height: 132px !important;
-  margin: 0 auto !important;
+  position: relative !important;
+  width: 112px !important;
+  height: 112px !important;
+  min-width: 112px !important;
+  min-height: 112px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
   background-image: url("/assets/draw-pile.png") !important;
-  background-size: 136% 136% !important;
+  background-size: 128% 128% !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
 }
+
 .hybridDrawCircle .deckFaceCount,
 .deckFaceCount {
+  position: absolute !important;
   top: 50% !important;
   left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
   transform: translate(-50%, -50%) !important;
-  font-size: 36px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  line-height: 1 !important;
+  font-size: 34px !important;
+  text-align: center !important;
+  z-index: 5 !important;
 }
 
-/* Goal cards must stay perfectly stable on hover */
+/* --- Goal cards: lock ALL geometry on hover/focus --- */
+.goalList {
+  align-items: stretch !important;
+}
+
 .goalItem,
-.goalItem *,
 .goalItem:hover,
-.goalItem:hover *,
 .goalItem:focus,
-.goalItem:focus *,
-.goalItem:active,
-.goalItem:active *,
 .goalItem:focus-visible,
-.goalItem:focus-visible *,
+.goalItem:active,
 .hybridSidebar .goalItem,
 .hybridSidebar .goalItem:hover,
 .hybridSidebar .goalItem:focus,
-.hybridSidebar .goalItem:active,
-.hybridSidebar .goalItem:focus-visible {
+.hybridSidebar .goalItem:focus-visible,
+.hybridSidebar .goalItem:active {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 7px 8px !important;
+  border-width: 1px !important;
   transform: none !important;
   scale: 1 !important;
-  translate: none !important;
+  translate: 0 0 !important;
   animation: none !important;
-  transition-property: none !important;
-  transition-duration: 0s !important;
+  transition: none !important;
+  outline-offset: 0 !important;
 }
 
-/* Mobile: keep some margin while not overcrowding */
-@media (max-width: 760px) {
-  body {
-    padding: 10px !important;
-  }
-  .appShell {
-    width: min(calc(100vw - 20px), 100%) !important;
-  }
-  .flowBoard {
-    padding: 10px 10px 14px !important;
-  }
-  .flowCell {
-    padding: 0 2px !important;
-  }
-  .flowCell > .expedition,
-  .flowCellDiscard > .discardPile {
-    width: calc(100% - 4px) !important;
-  }
-  .hybridDrawCircle {
-    width: 116px !important;
-    height: 116px !important;
-    background-size: 138% 138% !important;
-  }
-  .hybridDrawCircle .deckFaceCount,
-  .deckFaceCount {
-    font-size: 32px !important;
-  }
+.goalItem *,
+.goalItem:hover *,
+.goalItem:focus *,
+.goalItem:focus-visible *,
+.goalItem:active * {
+  transform: none !important;
+  scale: 1 !important;
+  translate: 0 0 !important;
+  animation: none !important;
+  transition: none !important;
 }
