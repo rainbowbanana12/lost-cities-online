@@ -75,13 +75,24 @@ app.get("/healthz", (_req, res) => {
 });
 
 // Flat GitHub-friendly client layout: no public/ folder required.
+// v7.11: no-store on the core HTML/JS/CSS so a redeploy is never masked by a
+// stale browser cache (this caused one player to silently run old client
+// code while the other ran the latest — looked like a random gameplay bug).
+function noStore(res) {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
+}
 app.get("/", (_req, res) => {
+  noStore(res);
   res.sendFile(path.join(__dirname, "index.html"));
 });
 app.get("/game.js", (_req, res) => {
+  noStore(res);
   res.sendFile(path.join(__dirname, "game.js"));
 });
 app.get("/style.css", (_req, res) => {
+  noStore(res);
   res.sendFile(path.join(__dirname, "style.css"));
 });
 app.use("/assets", express.static(path.join(__dirname, "assets")));
