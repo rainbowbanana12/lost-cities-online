@@ -7021,3 +7021,47 @@ body {
   animation: none !important;
   transition: none !important;
 }
+
+
+/* =========================================================
+   v7.9 STABLE EXPEDITION TRANSPARENCY
+   Only the expedition ART is translucent. Cards/text stay 100% bright.
+   ========================================================= */
+
+/* Remove old phase/opponent opacity from the whole expedition element. */
+.flowCellMine > .expedition,
+.flowCellOpponent > .expedition,
+body.phase-play .flowCellMine > .expedition,
+body.phase-play .flowCellOpponent > .expedition,
+body.phase-draw .flowCellMine > .expedition,
+body.phase-draw .flowCellOpponent > .expedition {
+  opacity: 1 !important;
+  transition: none !important;
+  background-color: transparent !important;
+}
+
+/* The art itself stays gently translucent at all times. */
+.flowCellMine > .expedition::before,
+.flowCellOpponent > .expedition::before,
+body.phase-play .flowCellMine > .expedition::before,
+body.phase-play .flowCellOpponent > .expedition::before,
+body.phase-draw .flowCellMine > .expedition::before,
+body.phase-draw .flowCellOpponent > .expedition::before {
+  opacity: .72 !important;
+  filter: saturate(.68) brightness(.82) contrast(.94) !important;
+}
+
+/* Do not add a dark veil on top of the art. */
+.flowCellMine > .expedition::after,
+.flowCellOpponent > .expedition::after {
+  background: rgba(5, 10, 8, .03) !important;
+}
+
+/* Cards, labels and scores must remain fully opaque. */
+.flowCellMine > .expedition > *,
+.flowCellOpponent > .expedition > *,
+.flowCellMine .stack .card,
+.flowCellOpponent .stack .card {
+  opacity: 1 !important;
+  filter: none !important;
+}

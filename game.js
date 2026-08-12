@@ -329,7 +329,8 @@ function renderGoalSidebar() {
 
   list.innerHTML = "";
   (state.goals || []).forEach(goal => {
-    if (!isMobileMode() && goalOwnedByMe(goal)) return;
+    // A claimed goal is no longer available to either player, so remove it from the available-goal list immediately.
+    if (goal.status?.state === "claimed") return;
 
     const item = document.createElement("div");
     const done = goal.status?.state === "claimed";
