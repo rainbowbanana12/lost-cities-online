@@ -6480,3 +6480,109 @@ html,body{width:100%;height:auto;min-height:100%;overflow-x:hidden!important;ove
     display: none !important;
   }
 }
+
+
+/* =========================================================
+   v7.4 ART ASSETS
+   User-provided Lost City artwork applied to game board/cards.
+   ========================================================= */
+
+/* Main web background */
+body {
+  background-image: url("/assets/bg-main.png") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+/* Let the illustrated page background remain visible through the game shell. */
+.ambient {
+  display: none !important;
+}
+
+@media (min-width: 761px) {
+  .appShell {
+    background: transparent !important;
+  }
+
+  .flowBoard {
+    background: rgba(4, 15, 14, .20) !important;
+    backdrop-filter: none !important;
+  }
+
+  .flowCell,
+  .flowCell > .expedition,
+  .flowCellDiscard > .discardPile,
+  .flowHandZone,
+  .claimedGoalsZone {
+    background-color: rgba(7, 18, 16, .24) !important;
+  }
+}
+
+/* Shared card artwork */
+.card {
+  background-color: transparent !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  color: #f5ead2 !important;
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.95),
+    0 0 4px rgba(0,0,0,.65) !important;
+}
+
+.card::before,
+.card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.card.red {
+  background-image: url("/assets/card-red.png") !important;
+}
+
+.card.yellow {
+  background-image: url("/assets/card-yellow.png") !important;
+}
+
+.card.green {
+  background-image: url("/assets/card-green.png") !important;
+}
+
+.card.blue {
+  background-image: url("/assets/card-blue.png") !important;
+}
+
+.card.white {
+  background-image: url("/assets/card-white.png") !important;
+  color: #2b241b !important;
+  text-shadow:
+    0 1px 1px rgba(255,255,255,.82),
+    0 0 2px rgba(255,255,255,.55) !important;
+}
+
+/* Keep the existing rounded card silhouette while artwork fills it. */
+.card {
+  border-radius: 9px !important;
+}
+
+/* Selected/dragged states should still be readable over artwork. */
+.card.mobileSelected {
+  outline: 3px solid #ffe08a !important;
+  outline-offset: 2px !important;
+}
+
+.card.dragging {
+  opacity: .62 !important;
+}
+
+/* Lobby stays readable over the illustrated background. */
+.lobbyCard,
+.waitingCard {
+  background:
+    linear-gradient(145deg, rgba(18, 34, 31, .94), rgba(7, 18, 16, .96)) !important;
+}
