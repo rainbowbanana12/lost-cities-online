@@ -6586,3 +6586,115 @@ body {
   background:
     linear-gradient(145deg, rgba(18, 34, 31, .94), rgba(7, 18, 16, .96)) !important;
 }
+
+
+/* =========================================================
+   v7.5 UI ART PASS
+   ========================================================= */
+
+.goalItem,
+.goalItem:hover,
+.goalItem:focus,
+.goalItem:active,
+.claimedGoalCard,
+.claimedGoalCard:hover,
+.claimedGoalCard:focus,
+.claimedGoalCard:active {
+  transform: none !important;
+  scale: 1 !important;
+  translate: none !important;
+}
+.goalItem,
+.claimedGoalCard { transition: none !important; }
+
+.goalItem {
+  background:
+    linear-gradient(rgba(5,8,7,.28), rgba(5,8,7,.42)),
+    url("/assets/goal-card.png") center center / cover no-repeat !important;
+  border-color: rgba(190,145,69,.42) !important;
+}
+.goalItem.done {
+  background:
+    linear-gradient(rgba(44,34,13,.24), rgba(18,15,8,.35)),
+    url("/assets/goal-card.png") center center / cover no-repeat !important;
+}
+.claimedGoalCard {
+  background:
+    linear-gradient(rgba(5,8,7,.18), rgba(5,8,7,.30)),
+    url("/assets/goal-card.png") center center / cover no-repeat !important;
+  border-color: rgba(201,169,102,.48) !important;
+}
+
+.card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  text-align: center !important;
+  line-height: 1 !important;
+}
+
+@media (min-width: 761px) {
+  .flowCellMine .stack .card { font-size: 31px !important; }
+  .flowCellOpponent .stack .card { font-size: 28px !important; }
+  .flowCellDiscard > .discardPile .card { font-size: 27px !important; }
+  .flowHandZone .hand .card { font-size: 34px !important; }
+}
+
+.flowCellMine > .expedition,
+.flowCellOpponent > .expedition {
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+.flowCellMine > .expedition::before,
+.flowCellOpponent > .expedition::before {
+  display: none !important;
+  content: none !important;
+}
+.flowCellMine > .expedition[data-color="red"],
+.flowCellOpponent > .expedition[data-color="red"] {
+  background-image: url("/assets/expedition-red.png") !important;
+}
+.flowCellMine > .expedition[data-color="yellow"],
+.flowCellOpponent > .expedition[data-color="yellow"] {
+  background-image: url("/assets/expedition-yellow.png") !important;
+}
+.flowCellMine > .expedition[data-color="green"],
+.flowCellOpponent > .expedition[data-color="green"] {
+  background-image: url("/assets/expedition-green.png") !important;
+}
+.flowCellMine > .expedition[data-color="blue"],
+.flowCellOpponent > .expedition[data-color="blue"] {
+  background-image: url("/assets/expedition-blue.png") !important;
+}
+
+.hybridDrawCircle {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  background:
+    url("/assets/draw-pile.png") center center / 116% 116% no-repeat !important;
+  box-shadow:
+    0 10px 22px rgba(0,0,0,.34),
+    0 0 0 2px rgba(201,169,102,.26) !important;
+}
+.hybridDrawCircle .hybridDrawLabel {
+  position: relative !important;
+  z-index: 2 !important;
+  color: #35230b !important;
+  font-weight: 900 !important;
+  text-shadow: 0 1px 1px rgba(255,230,158,.72) !important;
+}
+.hybridDrawCircle .deckFaceCount {
+  position: relative !important;
+  z-index: 2 !important;
+  color: #2d1d09 !important;
+  font-size: 29px !important;
+  font-weight: 950 !important;
+  text-shadow: 0 1px 1px rgba(255,230,158,.78) !important;
+}
+.hybridDrawCircle:hover {
+  transform: none !important;
+  filter: brightness(1.06) !important;
+}
