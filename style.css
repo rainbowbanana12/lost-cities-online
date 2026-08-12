@@ -7065,3 +7065,68 @@ body.phase-draw .flowCellOpponent > .expedition::before {
   opacity: 1 !important;
   filter: none !important;
 }
+
+/* =========================================================
+   v7.10 EXPEDITION ART TRANSPARENCY — REAL FIX
+   The v7.9 block above targeted .expedition::before, but an
+   earlier rule (search "content: none") kills that pseudo-element
+   entirely, and the actual color PNGs are painted directly on
+   .expedition itself (100% opaque), not on the pseudo. So the v7.9
+   opacity had nothing to apply to. This block:
+     1) removes the image from .expedition itself
+     2) revives ::before and puts the image there instead
+     3) keeps title/score/cards on top at full opacity
+   Tweak the translucency by changing --expeditionArtOpacity below.
+   ========================================================= */
+:root {
+  --expeditionArtOpacity: .55;
+}
+
+.flowCellMine > .expedition[data-color],
+.flowCellOpponent > .expedition[data-color] {
+  background-image: none !important;
+}
+
+.flowCellMine > .expedition::before,
+.flowCellOpponent > .expedition::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  opacity: var(--expeditionArtOpacity) !important;
+  pointer-events: none !important;
+}
+
+.flowCellMine > .expedition[data-color="red"]::before,
+.flowCellOpponent > .expedition[data-color="red"]::before {
+  background-image: url("/assets/expedition-red.png") !important;
+}
+.flowCellMine > .expedition[data-color="yellow"]::before,
+.flowCellOpponent > .expedition[data-color="yellow"]::before {
+  background-image: url("/assets/expedition-yellow.png") !important;
+}
+.flowCellMine > .expedition[data-color="green"]::before,
+.flowCellOpponent > .expedition[data-color="green"]::before {
+  background-image: url("/assets/expedition-green.png") !important;
+}
+.flowCellMine > .expedition[data-color="blue"]::before,
+.flowCellOpponent > .expedition[data-color="blue"]::before {
+  background-image: url("/assets/expedition-blue.png") !important;
+}
+.flowCellMine > .expedition[data-color="white"]::before,
+.flowCellOpponent > .expedition[data-color="white"]::before {
+  background-image: url("/assets/expedition-white.png") !important;
+}
+
+/* Real content sits in its own stacking layer, above the translucent art. */
+.flowCellMine > .expedition > .expeditionTitle,
+.flowCellOpponent > .expedition > .expeditionTitle,
+.flowCellMine > .expedition > .stack,
+.flowCellOpponent > .expedition > .stack {
+  position: relative !important;
+  z-index: 1 !important;
+}
