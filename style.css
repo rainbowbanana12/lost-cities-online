@@ -6698,3 +6698,170 @@ body {
   transform: none !important;
   filter: brightness(1.06) !important;
 }
+
+
+/* =========================================================
+   v7.6 BOARD POLISH
+   - gameplay board uses same background art as page background
+   - new expedition lane art incl. white
+   - new draw pile art with centered count
+   - squarer non-card panels
+   ========================================================= */
+
+/* Use the same main background inside the active play surface */
+.appShell,
+.flowBoard {
+  background-image: url("/assets/bg-main.png") !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Sharpen most panel corners; keep cards rounded separately */
+.appShell,
+.flowBoard,
+.flowHeader,
+.flowCell,
+.flowCell > .expedition,
+.flowCell > .discardPile,
+.flowCellDiscard > .discardPile,
+.flowHandZone,
+.claimedGoalsZone,
+.drawRail,
+.hybridSidebar,
+.goalItem,
+.claimedGoalCard,
+.lobbyCard,
+.waitingCard,
+.historySide,
+.flowTopBar,
+.flowStatusChip,
+.opponentFinalHandWrap,
+.opponentFinalHandCards,
+.hybridOpponentZone,
+.hybridDiscardZone,
+.hybridMyExpeditionZone,
+.hybridLiveScoreZone,
+.hybridHandZone,
+.mobileActionDock,
+.mobileGoalToggle,
+.mobileActionButtons button,
+#mobileCancelSelection {
+  border-radius: 4px !important;
+}
+
+/* Cards remain rounded */
+.card,
+.hybridHandZone .hand .card,
+.flowCell .stack .card,
+.flowCellDiscard > .discardPile .card {
+  border-radius: 9px !important;
+}
+
+/* New expedition lane art */
+.flowCellMine > .expedition,
+.flowCellOpponent > .expedition {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.flowCellMine > .expedition[data-color="red"],
+.flowCellOpponent > .expedition[data-color="red"] {
+  background-image: url("/assets/expedition-red.png") !important;
+}
+.flowCellMine > .expedition[data-color="yellow"],
+.flowCellOpponent > .expedition[data-color="yellow"] {
+  background-image: url("/assets/expedition-yellow.png") !important;
+}
+.flowCellMine > .expedition[data-color="green"],
+.flowCellOpponent > .expedition[data-color="green"] {
+  background-image: url("/assets/expedition-green.png") !important;
+}
+.flowCellMine > .expedition[data-color="blue"],
+.flowCellOpponent > .expedition[data-color="blue"] {
+  background-image: url("/assets/expedition-blue.png") !important;
+}
+.flowCellMine > .expedition[data-color="white"],
+.flowCellOpponent > .expedition[data-color="white"] {
+  background-image: url("/assets/expedition-white.png") !important;
+}
+
+/* New draw pile art and precise text centering */
+.hybridDrawCircle {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  background: url("/assets/draw-pile.png") center center / cover no-repeat !important;
+  border: 0 !important;
+  box-shadow: 0 10px 22px rgba(0,0,0,.34), 0 0 0 2px rgba(201,169,102,.26) !important;
+}
+
+.hybridDrawLabel {
+  position: absolute !important;
+  top: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 2 !important;
+  width: auto !important;
+  margin: 0 !important;
+  color: #f5deb0 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  letter-spacing: .02em !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.55) !important;
+  pointer-events: none !important;
+}
+
+.hybridDrawCircle .deckFaceCount,
+.deckFaceCount {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 3 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  color: #fff4d6 !important;
+  font-size: 34px !important;
+  font-weight: 950 !important;
+  text-align: center !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,.7) !important;
+  pointer-events: none !important;
+}
+
+.hybridDrawCircle .deckFaceCount.danger,
+.deckFaceCount.danger {
+  color: #ff5747 !important;
+}
+
+/* Slightly quieter expedition/discard panels so the art reads cleanly */
+.flowCell,
+.flowCell > .expedition,
+.flowCellDiscard > .discardPile,
+.claimedGoalsZone,
+.flowHandZone {
+  box-shadow: none !important;
+}
+
+/* Mobile retains more compact corners too */
+@media (max-width: 760px) {
+  .hybridSidebar,
+  .mobileActionDock,
+  .mobileGoalToggle,
+  .mobileActionButtons button,
+  #mobileCancelSelection,
+  .hybridOpponentZone,
+  .hybridDiscardZone,
+  .hybridMyExpeditionZone,
+  .hybridLiveScoreZone,
+  .hybridHandZone {
+    border-radius: 4px !important;
+  }
+  .hybridDrawCircle .deckFaceCount,
+  .deckFaceCount {
+    font-size: 30px !important;
+  }
+}
